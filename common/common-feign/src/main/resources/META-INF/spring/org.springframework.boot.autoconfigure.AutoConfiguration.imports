@@ -1,0 +1,3 @@
+com.wangchenyang.common.feign.YifanFeignAutoConfiguration
+com.wangchenyang.common.feign.sentinel.SentinelAutoConfiguration
+com.wangchenyang.common.feign.sentinel.handle.GlobalBizExceptionHandler

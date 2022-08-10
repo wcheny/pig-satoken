@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+    com.wangchenyang.common.anti.replay.spring.NarutoAntiReplayAutoConfiguration
+

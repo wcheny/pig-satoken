@@ -1,0 +1,98 @@
+version: '3'
+services:
+  gateway:
+    build:
+      context: ./gateway
+    restart: always
+    ports:
+      - "9999:9999"
+    networks:
+      - yifan
+    volumes:
+      - "/docker_data/project/:/gateway/logs/"
+    container_name: gateway
+    hostname: gateway
+    image: gateway
+
+  auth:
+    build:
+      context: ./auth
+    restart: always
+    container_name: auth
+    depends_on:
+      - gateway
+    networks:
+      - yifan
+    volumes:
+      - "/docker_data/project/:/auth/logs/"
+    hostname: auth
+    image: auth
+
+  upms:
+    build:
+      context: ./upms/upms-biz
+    restart: always
+    container_name: upms
+    networks:
+      - yifan
+    depends_on:
+      - gateway
+      - auth
+    volumes:
+      - "/docker_data/project/:/upms-biz/logs/"
+    hostname: upms
+    image: upms
+
+  monitor:
+    build:
+      context: ./visual/monitor
+    restart: always
+    networks:
+      - yifan
+    ports:
+      - 5001:5001
+    volumes:
+      - "/docker_data/project/:/monitor/logs/"
+    container_name: monitor
+    hostname: monitor
+    image: monitor
+
+  sentinel:
+    build:
+      context: ./visual/sentinel-dashboard
+    restart: always
+    networks:
+      - yifan
+    image: sentinel
+    container_name: sentinel
+    ports:
+      - 5003:5003
+
+  codegen:
+    build:
+      context: ./visual/codegen
+    restart: always
+    networks:
+      - yifan
+    volumes:
+      - "/docker_data/project/:/codegen/logs/"
+    container_name: codegen
+    hostname: codegen
+    image: codegen
+
+  job:
+    build:
+      context: ./visual/xxl-job-admin
+    restart: always
+    container_name: job
+    networks:
+      - yifan
+    volumes:
+      - "/docker_data/project/:/xxl-job-admin/logs/"
+    hostname: job
+    image: job
+    ports:
+      - 5004:5004
+
+networks:
+  yifan:

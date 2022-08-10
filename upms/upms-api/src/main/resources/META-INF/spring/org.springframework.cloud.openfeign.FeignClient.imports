@@ -1,0 +1,7 @@
+com.wangchenyang.admin.api.feign.RemoteClientDetailsService
+com.wangchenyang.admin.api.feign.RemoteDictService
+com.wangchenyang.admin.api.feign.RemoteDeptService
+com.wangchenyang.admin.api.feign.RemoteLogService
+com.wangchenyang.admin.api.feign.RemoteTokenService
+com.wangchenyang.admin.api.feign.RemoteUserService
+com.wangchenyang.admin.api.feign.RemoteParamService
