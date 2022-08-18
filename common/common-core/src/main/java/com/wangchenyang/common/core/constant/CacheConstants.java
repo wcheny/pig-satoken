@@ -25,16 +25,6 @@ package com.wangchenyang.common.core.constant;
 public interface CacheConstants {
 
 	/**
-	 * oauth 缓存前缀
-	 */
-	String PROJECT_OAUTH_ACCESS = "token::access_token";
-
-	/**
-	 * oauth 缓存令牌前缀
-	 */
-	String PROJECT_OAUTH_TOKEN = "yifan_oauth:token:";
-
-	/**
 	 * 验证码前缀
 	 */
 	String DEFAULT_CODE_KEY = "DEFAULT_CODE_KEY:";
@@ -55,13 +45,16 @@ public interface CacheConstants {
 	String DICT_DETAILS = "dict_details";
 
 	/**
-	 * oauth 客户端信息
-	 */
-	String CLIENT_DETAILS_KEY = "client:details";
-
-	/**
 	 * 参数缓存
 	 */
 	String PARAMS_DETAILS = "params_details";
+	/**
+	 * 登录用户 redis key
+	 */
+	String LOGIN_TOKEN_KEY = "Authorization:login:token:";
+	/**
+	 * 在线用户 redis key
+	 */
+	String ONLINE_TOKEN_KEY = "online_tokens:";
 
 }

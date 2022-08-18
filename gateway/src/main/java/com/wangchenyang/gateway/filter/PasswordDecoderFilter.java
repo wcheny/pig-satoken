@@ -22,8 +22,11 @@ import cn.hutool.crypto.Mode;
 import cn.hutool.crypto.Padding;
 import cn.hutool.crypto.symmetric.AES;
 import cn.hutool.http.HttpUtil;
+import cn.hutool.json.JSON;
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
 import com.wangchenyang.common.core.constant.SecurityConstants;
-import com.wangchenyang.gateway.config.GatewayConfigProperties;
+import com.wangchenyang.gateway.config.properties.GatewayConfigProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
@@ -36,6 +39,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.codec.HttpMessageReader;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpRequestDecorator;
+import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyInserter;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.HandlerStrategies;
@@ -57,7 +61,10 @@ import java.util.function.Function;
  */
 @Slf4j
 @RequiredArgsConstructor
-public class PasswordDecoderFilter extends AbstractGatewayFilterFactory {
+@Component
+public class PasswordDecoderFilter extends AbstractGatewayFilterFactory<Object> {
+
+	private final static String[] DECODEPWD_URL = new String[]{"/auth/login"};
 
 	private static final List<HttpMessageReader<?>> messageReaders = HandlerStrategies.withDefaults().messageReaders();
 
@@ -72,16 +79,9 @@ public class PasswordDecoderFilter extends AbstractGatewayFilterFactory {
 		return (exchange, chain) -> {
 			ServerHttpRequest request = exchange.getRequest();
 			// 1. 不是登录请求，直接向下执行
-			if (!StrUtil.containsAnyIgnoreCase(request.getURI().getPath(), SecurityConstants.OAUTH_TOKEN_URL)) {
+			if (!StrUtil.containsAnyIgnoreCase(request.getURI().getPath(), DECODEPWD_URL)) {
 				return chain.filter(exchange);
 			}
-
-			// 2. 刷新token类型，直接向下执行
-			String grantType = request.getQueryParams().getFirst("grant_type");
-			if (StrUtil.equals(SecurityConstants.REFRESH_TOKEN, grantType)) {
-				return chain.filter(exchange);
-			}
-
 			// 3. 前端加密密文解密逻辑
 			Class inClass = String.class;
 			Class outClass = String.class;
@@ -114,9 +114,9 @@ public class PasswordDecoderFilter extends AbstractGatewayFilterFactory {
 			AES aes = new AES(Mode.CFB, Padding.NoPadding,
 					new SecretKeySpec(gatewayConfig.getEncodeKey().getBytes(), KEY_ALGORITHM),
 					new IvParameterSpec(gatewayConfig.getEncodeKey().getBytes()));
-
 			// 获取请求密码并解密
-			Map<String, String> inParamsMap = HttpUtil.decodeParamMap((String) s, CharsetUtil.CHARSET_UTF_8);
+			Map<String, String> inParamsMap=JSONUtil.isTypeJSONObject((String) s)?JSONUtil.toBean((String) s,Map.class)
+					:HttpUtil.decodeParamMap((String) s, CharsetUtil.CHARSET_UTF_8);
 			if (inParamsMap.containsKey(PASSWORD)) {
 				String password = aes.decryptStr(inParamsMap.get(PASSWORD));
 				// 返回修改后报文字符

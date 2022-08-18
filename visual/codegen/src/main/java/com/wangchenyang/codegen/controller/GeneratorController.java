@@ -22,8 +22,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wangchenyang.codegen.entity.GenConfig;
 import com.wangchenyang.codegen.service.GeneratorService;
 import com.wangchenyang.common.core.util.R;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.http.HttpHeaders;
@@ -42,8 +40,6 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/generator")
-@Tag(name = "代码生成模块")
-@SecurityRequirement(name = HttpHeaders.AUTHORIZATION)
 public class GeneratorController {
 
 	private final GeneratorService generatorService;

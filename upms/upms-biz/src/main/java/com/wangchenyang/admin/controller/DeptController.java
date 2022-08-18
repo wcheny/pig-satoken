@@ -15,15 +15,14 @@
  */
 package com.wangchenyang.admin.controller;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.hutool.core.lang.tree.Tree;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.wangchenyang.admin.api.entity.SysDept;
 import com.wangchenyang.admin.service.SysDeptService;
 import com.wangchenyang.common.core.util.R;
 import com.wangchenyang.common.log.annotation.SysLog;
-import com.wangchenyang.common.security.annotation.Inner;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import io.swagger.v3.oas.annotations.tags.Tag;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -43,8 +42,6 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/dept")
-@Tag(name = "部门管理模块")
-@SecurityRequirement(name = HttpHeaders.AUTHORIZATION)
 public class DeptController {
 
 	private final SysDeptService sysDeptService;
@@ -84,7 +81,7 @@ public class DeptController {
 	 */
 	@SysLog("添加部门")
 	@PostMapping
-	@PreAuthorize("@pms.hasPermission('sys_dept_add')")
+	@SaCheckPermission("sys_dept_add")
 	public R<Boolean> save(@Valid @RequestBody SysDept sysDept) {
 		return R.ok(sysDeptService.saveDept(sysDept));
 	}
@@ -96,7 +93,7 @@ public class DeptController {
 	 */
 	@SysLog("删除部门")
 	@DeleteMapping("/{id:\\d+}")
-	@PreAuthorize("@pms.hasPermission('sys_dept_del')")
+	@SaCheckPermission("sys_dept_del")
 	public R<Boolean> removeById(@PathVariable Long id) {
 		return R.ok(sysDeptService.removeDeptById(id));
 	}
@@ -108,7 +105,7 @@ public class DeptController {
 	 */
 	@SysLog("编辑部门")
 	@PutMapping
-	@PreAuthorize("@pms.hasPermission('sys_dept_edit')")
+	@SaCheckPermission("sys_dept_edit")
 	public R<Boolean> update(@Valid @RequestBody SysDept sysDept) {
 		return R.ok(sysDeptService.updateDeptById(sysDept));
 	}
@@ -129,7 +126,6 @@ public class DeptController {
 	 * 查收子级id列表
 	 * @return 返回子级id列表
 	 */
-	@Inner
 	@GetMapping(value = "/child-id/{deptId:\\d+}")
 	public R<List<Long>> listChildDeptId(@PathVariable Long deptId) {
 		return R.ok(sysDeptService.listChildDeptId(deptId));

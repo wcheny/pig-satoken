@@ -11,7 +11,7 @@
     <artifactId>auth</artifactId>
     <packaging>jar</packaging>
 
-    <description> 认证授权中心，基于 spring security oAuth2</description>
+    <description> 认证授权中心，基于 satoken</description>
 
     <dependencies>
         <!--注册中心客户端-->
@@ -34,14 +34,10 @@
             <groupId>com.wangchenyang</groupId>
             <artifactId>upms-api</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.wangchenyang</groupId>
-            <artifactId>common-security</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>com.wangchenyang</groupId>
+			<artifactId>common-security</artifactId>
+		</dependency>
         <!--freemarker-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

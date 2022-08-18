@@ -22,6 +22,7 @@ import com.wangchenyang.common.log.util.LogTypeEnum;
 import com.wangchenyang.common.log.util.SysLogUtils;
 import com.wangchenyang.admin.api.entity.SysLog;
 import com.wangchenyang.common.core.util.SpringContextHolder;
+import com.wangchenyang.common.satoken.utils.LoginHelper;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -61,12 +62,14 @@ public class SysLogAspect {
 				log.error("@SysLog 解析SPEL {} 异常", expression);
 			}
 		}
-
 		SysLog logVo = SysLogUtils.getSysLog();
+		String userName = getUserName();
+		logVo.setCreateBy(userName);
+		logVo.setUpdateBy(userName);
 		logVo.setTitle(value);
-
 		// 发送异步日志事件
 		Long startTime = System.currentTimeMillis();
+
 		Object obj;
 
 		try {
@@ -84,6 +87,14 @@ public class SysLogAspect {
 		}
 
 		return obj;
+	}
+
+	public String getUserName(){
+		try {
+			return LoginHelper.getUsername();
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 }

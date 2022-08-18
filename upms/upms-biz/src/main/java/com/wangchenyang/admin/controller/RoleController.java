@@ -16,6 +16,7 @@
 
 package com.wangchenyang.admin.controller;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -28,8 +29,6 @@ import com.wangchenyang.common.core.util.R;
 import com.wangchenyang.common.log.annotation.SysLog;
 import com.pig4cloud.plugin.excel.annotation.RequestExcel;
 import com.pig4cloud.plugin.excel.annotation.ResponseExcel;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -46,8 +45,6 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/role")
-@Tag(name = "角色管理模块")
-@SecurityRequirement(name = HttpHeaders.AUTHORIZATION)
 public class RoleController {
 
 	private final SysRoleService sysRoleService;
@@ -71,7 +68,7 @@ public class RoleController {
 	 */
 	@SysLog("添加角色")
 	@PostMapping
-	@PreAuthorize("@pms.hasPermission('sys_role_add')")
+	@SaCheckPermission("sys_role_add")
 	public R<Boolean> save(@Valid @RequestBody SysRole sysRole) {
 		return R.ok(sysRoleService.save(sysRole));
 	}
@@ -83,7 +80,7 @@ public class RoleController {
 	 */
 	@SysLog("修改角色")
 	@PutMapping
-	@PreAuthorize("@pms.hasPermission('sys_role_edit')")
+	@SaCheckPermission("sys_role_edit")
 	public R<Boolean> update(@Valid @RequestBody SysRole sysRole) {
 		return R.ok(sysRoleService.updateById(sysRole));
 	}
@@ -95,7 +92,7 @@ public class RoleController {
 	 */
 	@SysLog("删除角色")
 	@DeleteMapping("/{id:\\d+}")
-	@PreAuthorize("@pms.hasPermission('sys_role_del')")
+	@SaCheckPermission("sys_role_del")
 	public R<Boolean> removeById(@PathVariable Long id) {
 		return R.ok(sysRoleService.removeRoleById(id));
 	}
@@ -126,7 +123,7 @@ public class RoleController {
 	 */
 	@SysLog("更新角色菜单")
 	@PutMapping("/menu")
-	@PreAuthorize("@pms.hasPermission('sys_role_perm')")
+	@SaCheckPermission("sys_role_perm")
 	public R<Boolean> saveRoleMenus(@RequestBody RoleVo roleVo) {
 		return R.ok(sysRoleMenuService.saveRoleMenus(roleVo.getRoleId(), roleVo.getMenuIds()));
 	}
@@ -137,7 +134,7 @@ public class RoleController {
 	 */
 	@ResponseExcel
 	@GetMapping("/export")
-	@PreAuthorize("@pms.hasPermission('sys_role_import_export')")
+	@SaCheckPermission("sys_role_import_export")
 	public List<RoleExcelVO> export() {
 		return sysRoleService.listRole();
 	}
@@ -149,7 +146,7 @@ public class RoleController {
 	 * @return ok fail
 	 */
 	@PostMapping("/import")
-	@PreAuthorize("@pms.hasPermission('sys_role_import_export')")
+	@SaCheckPermission("sys_role_import_export")
 	public R importRole(@RequestExcel List<RoleExcelVO> excelVOList, BindingResult bindingResult) {
 		return sysRoleService.importRole(excelVOList, bindingResult);
 	}

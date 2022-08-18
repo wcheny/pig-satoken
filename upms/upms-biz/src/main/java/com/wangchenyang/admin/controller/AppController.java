@@ -1,16 +1,13 @@
 package com.wangchenyang.admin.controller;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.wangchenyang.admin.api.dto.UserInfo;
 import com.wangchenyang.admin.api.entity.SysUser;
 import com.wangchenyang.admin.service.AppService;
 import com.wangchenyang.admin.service.SysUserService;
+import com.wangchenyang.common.core.dto.LoginUser;
 import com.wangchenyang.common.core.exception.ErrorCodes;
 import com.wangchenyang.common.core.util.MsgUtils;
 import com.wangchenyang.common.core.util.R;
-import com.wangchenyang.common.security.annotation.Inner;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,15 +22,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/app")
-@Tag(name = "移动端登录模块")
-@SecurityRequirement(name = HttpHeaders.AUTHORIZATION)
 public class AppController {
 
 	private final AppService appService;
 
 	private final SysUserService userService;
 
-	@Inner(value = false)
 	@GetMapping("/{mobile}")
 	public R<Boolean> sendSmsCode(@PathVariable String mobile) {
 		return appService.sendSmsCode(mobile);
@@ -44,9 +38,8 @@ public class AppController {
 	 * @param phone 手机号
 	 * @return 用户信息
 	 */
-	@Inner
 	@GetMapping("/info/{phone}")
-	public R<UserInfo> infoByMobile(@PathVariable String phone) {
+	public R<LoginUser> infoByMobile(@PathVariable String phone) {
 		SysUser user = userService.getOne(Wrappers.<SysUser>query().lambda().eq(SysUser::getPhone, phone));
 		if (user == null) {
 			return R.failed(MsgUtils.getMessage(ErrorCodes.SYS_USER_USERINFO_EMPTY, phone));

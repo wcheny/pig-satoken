@@ -19,9 +19,11 @@ package com.wangchenyang.common.log.event;
 import com.wangchenyang.admin.api.entity.SysLog;
 import com.wangchenyang.admin.api.feign.RemoteLogService;
 import com.wangchenyang.common.core.constant.SecurityConstants;
+import com.wangchenyang.common.core.util.SpringContextHolder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
+import org.springframework.core.SpringProperties;
 import org.springframework.core.annotation.Order;
 import org.springframework.scheduling.annotation.Async;
 
@@ -39,7 +41,8 @@ public class SysLogListener {
 	@EventListener(SysLogEvent.class)
 	public void saveSysLog(SysLogEvent event) {
 		SysLog sysLog = (SysLog) event.getSource();
-		remoteLogService.saveLog(sysLog, SecurityConstants.FROM_IN);
+		sysLog.setServiceId(SpringContextHolder.getApplicationContext().getId());
+		remoteLogService.saveLog(sysLog);
 	}
 
 }

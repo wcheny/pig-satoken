@@ -49,10 +49,6 @@ import java.util.Optional;
 @UtilityClass
 public class WebUtils extends org.springframework.web.util.WebUtils {
 
-	private final String BASIC_ = "Basic ";
-
-	private final String UNKNOWN = "unknown";
-
 	/**
 	 * 判断是否ajax请求 spring ajax 返回含有 ResponseBody 或者 RestController注解
 	 * @param handlerMethod HandlerMethod
@@ -151,49 +147,6 @@ public class WebUtils extends org.springframework.web.util.WebUtils {
 		catch (IOException e) {
 			log.error(e.getMessage(), e);
 		}
-	}
-
-	/**
-	 * 从request 获取CLIENT_ID
-	 * @return
-	 */
-	@SneakyThrows
-	public String getClientId(ServerHttpRequest request) {
-		String header = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
-		return splitClient(header)[0];
-	}
-
-	@SneakyThrows
-	public String getClientId() {
-		if (WebUtils.getRequest().isPresent()) {
-			String header = WebUtils.getRequest().get().getHeader(HttpHeaders.AUTHORIZATION);
-			return splitClient(header)[0];
-		}
-		return null;
-	}
-
-	@NotNull
-	private static String[] splitClient(String header) {
-		if (header == null || !header.startsWith(BASIC_)) {
-			throw new CheckedException("请求头中client信息为空");
-		}
-		byte[] base64Token = header.substring(6).getBytes(StandardCharsets.UTF_8);
-		byte[] decoded;
-		try {
-			decoded = Base64.decode(base64Token);
-		}
-		catch (IllegalArgumentException e) {
-			throw new CheckedException("Failed to decode basic authentication token");
-		}
-
-		String token = new String(decoded, StandardCharsets.UTF_8);
-
-		int delim = token.indexOf(":");
-
-		if (delim == -1) {
-			throw new CheckedException("Invalid basic authentication token");
-		}
-		return new String[] { token.substring(0, delim), token.substring(delim + 1) };
 	}
 
 }

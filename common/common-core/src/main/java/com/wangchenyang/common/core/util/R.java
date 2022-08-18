@@ -84,4 +84,8 @@ public class R<T> implements Serializable {
 		return apiResult;
 	}
 
+	public static <T> R<T> restResult(int code, String msg) {
+		return restResult(null,code,msg);
+	}
+
 }

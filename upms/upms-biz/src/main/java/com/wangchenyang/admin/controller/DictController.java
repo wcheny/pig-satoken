@@ -16,6 +16,7 @@
 
 package com.wangchenyang.admin.controller;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -26,8 +27,6 @@ import com.wangchenyang.admin.service.SysDictService;
 import com.wangchenyang.common.core.constant.CacheConstants;
 import com.wangchenyang.common.core.util.R;
 import com.wangchenyang.common.log.annotation.SysLog;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -49,8 +48,6 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/dict")
-@Tag(name = "字典管理模块")
-@SecurityRequirement(name = HttpHeaders.AUTHORIZATION)
 public class DictController {
 
 	private final SysDictItemService sysDictItemService;
@@ -95,7 +92,7 @@ public class DictController {
 	 */
 	@SysLog("添加字典")
 	@PostMapping
-	@PreAuthorize("@pms.hasPermission('sys_dict_add')")
+	@SaCheckPermission("sys_dict_add")
 	public R<Boolean> save(@Valid @RequestBody SysDict sysDict) {
 		return R.ok(sysDictService.save(sysDict));
 	}
@@ -107,7 +104,7 @@ public class DictController {
 	 */
 	@SysLog("删除字典")
 	@DeleteMapping("/{id:\\d+}")
-	@PreAuthorize("@pms.hasPermission('sys_dict_del')")
+	@SaCheckPermission("sys_dict_del")
 	public R removeById(@PathVariable Long id) {
 		sysDictService.removeDict(id);
 		return R.ok();
@@ -120,7 +117,7 @@ public class DictController {
 	 */
 	@PutMapping
 	@SysLog("修改字典")
-	@PreAuthorize("@pms.hasPermission('sys_dict_edit')")
+	@SaCheckPermission("sys_dict_edit")
 	public R updateById(@Valid @RequestBody SysDict sysDict) {
 		sysDictService.updateDict(sysDict);
 		return R.ok();
@@ -185,7 +182,7 @@ public class DictController {
 
 	@SysLog("清除字典缓存")
 	@DeleteMapping("/cache")
-	@PreAuthorize("@pms.hasPermission('sys_dict_del')")
+	@SaCheckPermission("sys_dict_del")
 	public R clearDictCache() {
 		sysDictService.clearDictCache();
 		return R.ok();

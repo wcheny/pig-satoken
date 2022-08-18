@@ -17,7 +17,6 @@
 package com.wangchenyang.admin.api.entity;
 
 import com.baomidou.mybatisplus.extension.activerecord.Model;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -38,13 +37,11 @@ public class SysUserRole extends Model<SysUserRole> {
 	/**
 	 * 用户ID
 	 */
-	@Schema(description = "用户id")
 	private Long userId;
 
 	/**
 	 * 角色ID
 	 */
-	@Schema(description = "角色id")
 	private Long roleId;
 
 }

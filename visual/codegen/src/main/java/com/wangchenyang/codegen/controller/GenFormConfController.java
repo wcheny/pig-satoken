@@ -23,9 +23,6 @@ import com.wangchenyang.codegen.entity.GenFormConf;
 import com.wangchenyang.codegen.service.GenFormConfService;
 import com.wangchenyang.common.core.util.R;
 import com.wangchenyang.common.log.annotation.SysLog;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -40,8 +37,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/form")
-@Tag(name = "表单管理")
-@SecurityRequirement(name = HttpHeaders.AUTHORIZATION)
 public class GenFormConfController {
 
 	private final GenFormConfService genRecordService;
@@ -52,7 +47,6 @@ public class GenFormConfController {
 	 * @param formConf 生成记录
 	 * @return
 	 */
-	@Operation(summary = "分页查询", description = "分页查询")
 	@GetMapping("/page")
 	public R<IPage<GenFormConf>> getGenFormConfPage(Page page, GenFormConf formConf) {
 		return R.ok(genRecordService.page(page, Wrappers.query(formConf)));
@@ -63,7 +57,6 @@ public class GenFormConfController {
 	 * @param id id
 	 * @return R
 	 */
-	@Operation(summary = "通过id查询", description = "通过id查询")
 	@GetMapping("/{id}")
 	public R<GenFormConf> getById(@PathVariable("id") Integer id) {
 		return R.ok(genRecordService.getById(id));
@@ -75,7 +68,6 @@ public class GenFormConfController {
 	 * @param tableName tableName
 	 * @return R
 	 */
-	@Operation(summary = "通过tableName查询表单信息")
 	@GetMapping("/info")
 	public R<String> form(String dsName, String tableName) {
 		return R.ok(genRecordService.getForm(dsName, tableName));
@@ -86,7 +78,6 @@ public class GenFormConfController {
 	 * @param formConf 生成记录
 	 * @return R
 	 */
-	@Operation(summary = "新增生成记录", description = "新增生成记录")
 	@SysLog("新增生成记录")
 	@PostMapping
 	@PreAuthorize("@pms.hasPermission('gen_form_add')")
@@ -99,7 +90,6 @@ public class GenFormConfController {
 	 * @param id id
 	 * @return R
 	 */
-	@Operation(summary = "通过id删除生成记录", description = "通过id删除生成记录")
 	@SysLog("通过id删除生成记录")
 	@DeleteMapping("/{id}")
 	@PreAuthorize("@pms.hasPermission('gen_form_del')")

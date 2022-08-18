@@ -28,14 +28,6 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  */
 @EnableYifanFeignClients
 @EnableDiscoveryClient
-/**
- * DataSourceAutoConfiguration
- * 
- * @author 王晨阳
- * @version 1.0
- * @date 2022/8/7 11:01
- * @desc
-**/
 @SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
 public class AuthApplication {
 

@@ -19,13 +19,16 @@ package com.wangchenyang.gateway.handler;
 import com.pig4cloud.captcha.ArithmeticCaptcha;
 import com.wangchenyang.common.core.constant.CacheConstants;
 import com.wangchenyang.common.core.constant.SecurityConstants;
+import com.wangchenyang.common.redis.utils.RedisUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.checkerframework.checker.units.qual.C;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Component;
 import org.springframework.util.FastByteArrayOutputStream;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.HandlerFunction;
@@ -33,6 +36,7 @@ import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
+import java.time.Duration;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
@@ -42,13 +46,12 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 @RequiredArgsConstructor
+@Component
 public class ImageCodeHandler implements HandlerFunction<ServerResponse> {
 
 	private static final Integer DEFAULT_IMAGE_WIDTH = 100;
 
 	private static final Integer DEFAULT_IMAGE_HEIGHT = 40;
-
-	private final RedisTemplate<String, Object> redisTemplate;
 
 	@Override
 	public Mono<ServerResponse> handle(ServerRequest serverRequest) {
@@ -58,9 +61,7 @@ public class ImageCodeHandler implements HandlerFunction<ServerResponse> {
 
 		// 保存验证码信息
 		Optional<String> randomStr = serverRequest.queryParam("randomStr");
-		redisTemplate.setKeySerializer(new StringRedisSerializer());
-		randomStr.ifPresent(s -> redisTemplate.opsForValue().set(CacheConstants.DEFAULT_CODE_KEY + s, result,
-				SecurityConstants.CODE_TIME, TimeUnit.SECONDS));
+		randomStr.ifPresent(s -> RedisUtils.setCacheObject(CacheConstants.DEFAULT_CODE_KEY + s,result, Duration.ofSeconds(SecurityConstants.CODE_TIME)));
 
 		// 转换流信息写出
 		FastByteArrayOutputStream os = new FastByteArrayOutputStream();

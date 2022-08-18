@@ -17,7 +17,6 @@
 package com.wangchenyang.admin.api.entity;
 
 import com.baomidou.mybatisplus.extension.activerecord.Model;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -29,7 +28,6 @@ import lombok.EqualsAndHashCode;
  * @author lengleng
  * @since 2019/2/1
  */
-@Schema(description = "部门关系")
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class SysDeptRelation extends Model<SysDeptRelation> {
@@ -39,13 +37,11 @@ public class SysDeptRelation extends Model<SysDeptRelation> {
 	/**
 	 * 祖先节点
 	 */
-	@Schema(description = "祖先节点")
 	private Long ancestor;
 
 	/**
 	 * 后代节点
 	 */
-	@Schema(description = "后代节点")
 	private Long descendant;
 
 }

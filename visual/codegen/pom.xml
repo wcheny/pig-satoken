@@ -31,11 +31,6 @@
 	<description>代码生成模块</description>
 
 	<dependencies>
-		<!--接口文档-->
-		<dependency>
-			<groupId>com.wangchenyang</groupId>
-			<artifactId>common-swagger</artifactId>
-		</dependency>
 		<!--注册中心客户端-->
 		<dependency>
 			<groupId>com.alibaba.cloud</groupId>

@@ -3,17 +3,12 @@ package com.wangchenyang.admin.controller;
 import com.wangchenyang.admin.api.entity.SysUser;
 import com.wangchenyang.common.anti.replay.annotation.NarutoAntiReplay;
 import com.wangchenyang.common.core.util.R;
-import com.wangchenyang.common.security.annotation.Inner;
 import lombok.extern.slf4j.Slf4j;
 import online.inote.naruto.utils.DateTimeUtils;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-@Inner(value = false)
 @RestController("test")
 @Slf4j
 public class TestController {

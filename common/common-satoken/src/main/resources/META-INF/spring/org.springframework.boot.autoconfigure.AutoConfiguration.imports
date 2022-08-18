@@ -1,0 +1,2 @@
+com.wangchenyang.common.satoken.core.dao.PlusSaTokenDao
+com.wangchenyang.common.satoken.core.service.SaPermissionImpl

@@ -1,6 +1,5 @@
 com.wangchenyang.common.core.config.TaskExecutorConfiguration
 com.wangchenyang.common.core.config.JacksonConfiguration
-com.wangchenyang.common.core.config.RedisTemplateConfiguration
 com.wangchenyang.common.core.config.RestTemplateConfiguration
 com.wangchenyang.common.core.util.SpringContextHolder
 com.wangchenyang.common.core.config.WebMvcConfiguration

@@ -1,7 +1,3 @@
-com.wangchenyang.common.security.service.YifanUserDetailsServiceImpl
-com.wangchenyang.common.security.service.YifanAppUserDetailsServiceImpl
-com.wangchenyang.common.security.service.YifanRedisOAuth2AuthorizationService
-com.wangchenyang.common.security.service.YifanRedisOAuth2AuthorizationConsentService
-com.wangchenyang.common.security.component.YifanSecurityInnerAspect
-com.wangchenyang.common.security.component.YifanSecurityMessageSourceConfiguration
-com.wangchenyang.common.security.service.YifanRemoteRegisteredClientRepository
+com.wangchenyang.common.security.config.SecurityConfiguration
+com.wangchenyang.common.security.handler.GlobalExceptionHandler
+com.wangchenyang.common.security.feign.YifanFeignClientConfiguration

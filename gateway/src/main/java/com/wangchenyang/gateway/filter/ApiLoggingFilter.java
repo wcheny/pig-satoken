@@ -1,14 +1,32 @@
 package com.wangchenyang.gateway.filter;
 
+import cn.hutool.core.map.MapUtil;
+import cn.hutool.json.JSONUtil;
+import com.wangchenyang.gateway.config.properties.CustomGatewayProperties;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
+import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.http.MediaType;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.server.ServerWebExchange;
+import org.springframework.web.util.UriComponentsBuilder;
+import reactor.core.Disposable;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.net.URI;
+import java.nio.charset.StandardCharsets;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
+
+import static org.springframework.cloud.gateway.support.ServerWebExchangeUtils.GATEWAY_ORIGINAL_REQUEST_URL_ATTR;
 
 /**
  * @author zhangran
@@ -26,15 +44,17 @@ public class ApiLoggingFilter implements GlobalFilter, Ordered {
 	private static final String START_TIME = "startTime";
 
 	private static final String X_REAL_IP = "X-Real-IP";// nginx需要配置
+	@Autowired
+	private CustomGatewayProperties customGatewayProperties;
 
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-		if (log.isDebugEnabled()) {
-			String info = String.format("Method:{%s} Host:{%s} Path:{%s} Query:{%s}",
-					exchange.getRequest().getMethod().name(), exchange.getRequest().getURI().getHost(),
-					exchange.getRequest().getURI().getPath(), exchange.getRequest().getQueryParams());
-			log.debug(info);
+		if (!customGatewayProperties.getRequestLog()) {
+			return chain.filter(exchange);
 		}
+		ServerHttpRequest request = exchange.getRequest();
+		String url = request.getMethod().name() + " " + getOriginalRequestUrl(exchange);
+		log.debug("开始请求 => URL:[{}],参数:[{}]",url, request.getQueryParams());
 		exchange.getAttributes().put(START_TIME, System.currentTimeMillis());
 		return chain.filter(exchange).then(Mono.fromRunnable(() -> {
 			Long startTime = exchange.getAttribute(START_TIME);
@@ -43,15 +63,11 @@ public class ApiLoggingFilter implements GlobalFilter, Ordered {
 				List<String> ips = exchange.getRequest().getHeaders().get(X_REAL_IP);
 				String ip = ips != null ? ips.get(0) : null;
 				String api = exchange.getRequest().getURI().getRawPath();
-
 				int code = 500;
 				if (exchange.getResponse().getStatusCode() != null) {
 					code = exchange.getResponse().getStatusCode().value();
 				}
-				// 当前仅记录日志，后续可以添加日志队列，来过滤请求慢的接口
-				if (log.isDebugEnabled()) {
-					log.debug("来自IP地址：{}的请求接口：{}，响应状态码：{}，请求耗时：{}ms", ip, api, code, executeTime);
-				}
+				log.debug("结束请求 => IP地址[{}],URL[{}],响应状态码：[{}],耗时:[{}]毫秒",ip, api,code, executeTime);
 			}
 		}));
 	}
@@ -59,6 +75,13 @@ public class ApiLoggingFilter implements GlobalFilter, Ordered {
 	@Override
 	public int getOrder() {
 		return Ordered.LOWEST_PRECEDENCE;
+	}
+
+	public static String getOriginalRequestUrl(ServerWebExchange exchange) {
+		ServerHttpRequest request = exchange.getRequest();
+		LinkedHashSet<URI> uris = exchange.getRequiredAttribute(GATEWAY_ORIGINAL_REQUEST_URL_ATTR);
+		URI requestUri = uris.stream().findFirst().orElse(request.getURI());
+		return UriComponentsBuilder.fromPath(requestUri.getRawPath()).build().toUriString();
 	}
 
 }

@@ -16,17 +16,25 @@
 
 package com.wangchenyang.admin.controller;
 
-import com.wangchenyang.admin.api.feign.RemoteTokenService;
+import cn.dev33.satoken.exception.NotLoginException;
+import cn.dev33.satoken.stp.StpUtil;
+import cn.hutool.core.map.MapUtil;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.wangchenyang.common.core.constant.CacheConstants;
+import com.wangchenyang.common.core.constant.CommonConstants;
 import com.wangchenyang.common.core.constant.SecurityConstants;
+import com.wangchenyang.common.core.dto.SysUserOnline;
 import com.wangchenyang.common.core.util.R;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import com.wangchenyang.common.redis.utils.RedisUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @author lengleng
@@ -35,11 +43,7 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/token")
-@Tag(name = "令牌管理模块")
-@SecurityRequirement(name = HttpHeaders.AUTHORIZATION)
 public class TokenController {
-
-	private final RemoteTokenService remoteTokenService;
 
 	/**
 	 * 分页token 信息
@@ -47,8 +51,23 @@ public class TokenController {
 	 * @return token集合
 	 */
 	@GetMapping("/page")
-	public R token(@RequestParam Map<String, Object> params) {
-		return remoteTokenService.getTokenPage(params, SecurityConstants.FROM_IN);
+	public R token(@RequestParam Map<String, Object> params) {// 获取所有未过期的 token
+		List<String> keys = StpUtil.searchTokenValue("", -1, 0);
+		int current = MapUtil.getInt(params, CommonConstants.CURRENT);
+		int size = MapUtil.getInt(params, CommonConstants.SIZE);
+		List<String> pages = keys.stream().skip((long) (current - 1) * size).limit(size).collect(Collectors.toList());
+		Page result = new Page(current, size);
+		List<SysUserOnline> collect = pages.stream().map(obj -> {
+			String token = obj.replace(CacheConstants.LOGIN_TOKEN_KEY, "");
+			// 如果已经过期则踢下线
+			if (StpUtil.stpLogic.getTokenActivityTimeoutByToken(token) < 0) {
+				return null;
+			}
+			return (SysUserOnline)RedisUtils.getCacheObject(CacheConstants.ONLINE_TOKEN_KEY + token);
+		}).filter(Objects::nonNull).collect(Collectors.toList());
+		result.setRecords(collect);
+		result.setTotal(keys.size());
+		return R.ok(result);
 	}
 
 	/**
@@ -59,7 +78,11 @@ public class TokenController {
 	@DeleteMapping("/{id}")
 	@PreAuthorize("@pms.hasPermission('sys_token_del')")
 	public R<Boolean> delete(@PathVariable String id) {
-		return remoteTokenService.removeToken(id, SecurityConstants.FROM_IN);
+		try {
+			StpUtil.kickoutByTokenValue(id);
+		} catch (NotLoginException e) {
+		}
+		return R.ok(true);
 	}
 
 }

@@ -17,8 +17,6 @@
 package com.wangchenyang.admin;
 
 import com.wangchenyang.common.feign.annotation.EnableYifanFeignClients;
-import com.wangchenyang.common.security.annotation.EnableYifanResourceServer;
-import com.wangchenyang.common.swagger.annotation.EnableYifanDoc;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -27,8 +25,6 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  * @author lengleng
  * @date 2018年06月21日 用户统一管理系统
  */
-@EnableYifanDoc
-@EnableYifanResourceServer
 @EnableYifanFeignClients
 @EnableDiscoveryClient
 @SpringBootApplication

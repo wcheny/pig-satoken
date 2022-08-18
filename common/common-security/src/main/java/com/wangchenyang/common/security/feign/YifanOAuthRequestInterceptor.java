@@ -1,5 +1,6 @@
 package com.wangchenyang.common.security.feign;
 
+import cn.dev33.satoken.id.SaIdUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.wangchenyang.common.core.constant.SecurityConstants;
@@ -9,8 +10,6 @@ import feign.RequestTemplate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
-import org.springframework.security.oauth2.core.OAuth2AccessToken;
-import org.springframework.security.oauth2.server.resource.web.BearerTokenResolver;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
@@ -28,8 +27,6 @@ import java.util.Enumeration;
 @RequiredArgsConstructor
 public class YifanOAuthRequestInterceptor implements RequestInterceptor {
 
-	private final BearerTokenResolver tokenResolver;
-
 	/**
 	 * Create a template with the header of provided name and extracted extract </br>
 	 *
@@ -40,34 +37,7 @@ public class YifanOAuthRequestInterceptor implements RequestInterceptor {
 	 */
 	@Override
 	public void apply(RequestTemplate template) {
-		Collection<String> fromHeader = template.headers().get(SecurityConstants.FROM);
-		// 带from 请求直接跳过
-		if (CollUtil.isNotEmpty(fromHeader) && fromHeader.contains(SecurityConstants.FROM_IN)) {
-			return;
-		}
-
-		// 非web 请求直接跳过
-		if (!WebUtils.getRequest().isPresent()) {
-			return;
-		}
-		HttpServletRequest request = WebUtils.getRequest().get();
-		Enumeration<String> headerNames = request.getHeaderNames();
-		if (headerNames != null) {
-			while (headerNames.hasMoreElements()) {
-				String name = headerNames.nextElement();
-				String values = request.getHeader(name);
-				template.header(name, values);
-
-			}
-		}
-
-		// 避免请求参数的 query token 无法传递
-		String token = tokenResolver.resolve(request);
-		if (StrUtil.isBlank(token)) {
-			return;
-		}
-		template.header(HttpHeaders.AUTHORIZATION, String.format("%s %s", OAuth2AccessToken.TokenType.BEARER, token));
-
+		template.header(SaIdUtil.ID_TOKEN,SaIdUtil.getToken());
 	}
 
 }

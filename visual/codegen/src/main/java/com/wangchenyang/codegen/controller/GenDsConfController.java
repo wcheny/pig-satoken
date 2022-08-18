@@ -22,8 +22,6 @@ import com.wangchenyang.codegen.entity.GenDatasourceConf;
 import com.wangchenyang.codegen.service.GenDatasourceConfService;
 import com.wangchenyang.common.core.util.R;
 import com.wangchenyang.common.log.annotation.SysLog;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
@@ -39,8 +37,6 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/dsconf")
-@Tag(name = "数据源管理模块")
-@SecurityRequirement(name = HttpHeaders.AUTHORIZATION)
 public class GenDsConfController {
 
 	private final GenDatasourceConfService datasourceConfService;

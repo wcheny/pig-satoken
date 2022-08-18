@@ -27,7 +27,7 @@ import com.wangchenyang.admin.api.entity.SysDeptRelation;
 import com.wangchenyang.admin.mapper.SysDeptMapper;
 import com.wangchenyang.admin.service.SysDeptRelationService;
 import com.wangchenyang.admin.service.SysDeptService;
-import com.wangchenyang.common.security.util.SecurityUtils;
+import com.wangchenyang.common.satoken.utils.LoginHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -130,7 +130,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
 	 */
 	@Override
 	public List<Tree<Long>> listCurrentUserDeptTrees() {
-		Long deptId = SecurityUtils.getUser().getDeptId();
+		Long deptId = LoginHelper.getLoginUser().getDeptId();
 		List<Long> descendantIdList = sysDeptRelationService
 				.list(Wrappers.<SysDeptRelation>query().lambda().eq(SysDeptRelation::getAncestor, deptId)).stream()
 				.map(SysDeptRelation::getDescendant).collect(Collectors.toList());

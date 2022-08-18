@@ -16,7 +16,6 @@
 
 package com.wangchenyang.admin.api.vo;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 /**
@@ -24,7 +23,6 @@ import lombok.Data;
  * @date 2020/2/10
  */
 @Data
-@Schema(description = "前端角色展示对象")
 public class RoleVo {
 
 	/**

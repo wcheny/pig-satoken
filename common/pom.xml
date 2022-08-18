@@ -40,6 +40,7 @@
         <module>common-seata</module>
         <module>common-security</module>
         <module>common-feign</module>
-        <module>common-swagger</module>
+        <module>common-satoken</module>
+        <module>common-redis</module>
     </modules>
 </project>

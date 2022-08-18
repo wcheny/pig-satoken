@@ -2,11 +2,11 @@ package com.wangchenyang.common.mybatis.config;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
+import com.wangchenyang.common.core.dto.LoginUser;
+import com.wangchenyang.common.satoken.utils.LoginHelper;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.ClassUtils;
 
 import java.nio.charset.Charset;
@@ -69,11 +69,11 @@ public class MybatisPlusMetaObjectHandler implements MetaObjectHandler {
 	 * @return 当前用户名
 	 */
 	private String getUserName() {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (Optional.ofNullable(authentication).isPresent()) {
-			return authentication.getName();
+		try {
+			return LoginHelper.getUsername();
+		} catch (Exception e) {
+			return null;
 		}
-		return null;
 	}
 
 }

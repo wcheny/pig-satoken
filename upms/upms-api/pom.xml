@@ -36,11 +36,6 @@
             <groupId>com.wangchenyang</groupId>
             <artifactId>common-core</artifactId>
         </dependency>
-        <!--swagger-->
-        <dependency>
-            <groupId>io.swagger.core.v3</groupId>
-            <artifactId>swagger-annotations</artifactId>
-        </dependency>
         <!--feign 注解依赖-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>

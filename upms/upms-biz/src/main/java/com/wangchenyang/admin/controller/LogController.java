@@ -15,16 +15,15 @@
  */
 package com.wangchenyang.admin.controller;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wangchenyang.admin.api.dto.SysLogDTO;
 import com.wangchenyang.admin.api.entity.SysLog;
 import com.wangchenyang.admin.service.SysLogService;
 import com.wangchenyang.common.core.util.R;
-import com.wangchenyang.common.security.annotation.Inner;
+
 import com.pig4cloud.plugin.excel.annotation.ResponseExcel;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -44,8 +43,6 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/log")
-@Tag(name = "日志管理模块")
-@SecurityRequirement(name = HttpHeaders.AUTHORIZATION)
 public class LogController {
 
 	private final SysLogService sysLogService;
@@ -67,7 +64,7 @@ public class LogController {
 	 * @return success/false
 	 */
 	@DeleteMapping("/{id:\\d+}")
-	@PreAuthorize("@pms.hasPermission('sys_log_del')")
+	@SaCheckPermission("sys_log_del")
 	public R<Boolean> removeById(@PathVariable Long id) {
 		return R.ok(sysLogService.removeById(id));
 	}
@@ -77,7 +74,6 @@ public class LogController {
 	 * @param sysLog 日志实体
 	 * @return success/false
 	 */
-	@Inner
 	@PostMapping
 	public R<Boolean> save(@Valid @RequestBody SysLog sysLog) {
 		return R.ok(sysLogService.save(sysLog));
@@ -90,7 +86,7 @@ public class LogController {
 	 */
 	@ResponseExcel
 	@GetMapping("/export")
-	@PreAuthorize("@pms.hasPermission('sys_log_import_export')")
+	@SaCheckPermission("sys_log_import_export")
 	public List<SysLog> export(SysLogDTO sysLog) {
 		return sysLogService.getLogList(sysLog);
 	}

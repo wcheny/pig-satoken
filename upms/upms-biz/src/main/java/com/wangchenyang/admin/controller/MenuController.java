@@ -16,14 +16,14 @@
 
 package com.wangchenyang.admin.controller;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
+import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.lang.tree.Tree;
 import com.wangchenyang.admin.api.entity.SysMenu;
 import com.wangchenyang.admin.service.SysMenuService;
 import com.wangchenyang.common.core.util.R;
 import com.wangchenyang.common.log.annotation.SysLog;
-import com.wangchenyang.common.security.util.SecurityUtils;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import com.wangchenyang.common.satoken.utils.LoginHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -42,8 +42,6 @@ import java.util.stream.Collectors;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/menu")
-@Tag(name = "菜单管理模块")
-@SecurityRequirement(name = HttpHeaders.AUTHORIZATION)
 public class MenuController {
 
 	private final SysMenuService sysMenuService;
@@ -56,7 +54,7 @@ public class MenuController {
 	@GetMapping
 	public R<List<Tree<Long>>> getUserMenu(Long parentId) {
 		// 获取符合条件的菜单
-		Set<SysMenu> menuSet = SecurityUtils.getRoles().stream().map(sysMenuService::findMenuByRoleId)
+		Set<SysMenu> menuSet = LoginHelper.getLoginUser().getRoleIds().stream().map(sysMenuService::findMenuByRoleId)
 				.flatMap(Collection::stream).collect(Collectors.toSet());
 		return R.ok(sysMenuService.filterMenu(menuSet, parentId));
 	}
@@ -100,7 +98,7 @@ public class MenuController {
 	 */
 	@SysLog("新增菜单")
 	@PostMapping
-	@PreAuthorize("@pms.hasPermission('sys_menu_add')")
+	@SaCheckPermission("sys_menu_add")
 	public R<SysMenu> save(@Valid @RequestBody SysMenu sysMenu) {
 		sysMenuService.save(sysMenu);
 		return R.ok(sysMenu);
@@ -113,7 +111,7 @@ public class MenuController {
 	 */
 	@SysLog("删除菜单")
 	@DeleteMapping("/{id:\\d+}")
-	@PreAuthorize("@pms.hasPermission('sys_menu_del')")
+	@SaCheckPermission("sys_menu_del")
 	public R<Boolean> removeById(@PathVariable Long id) {
 		return R.ok(sysMenuService.removeMenuById(id));
 	}
@@ -125,7 +123,7 @@ public class MenuController {
 	 */
 	@SysLog("更新菜单")
 	@PutMapping
-	@PreAuthorize("@pms.hasPermission('sys_menu_edit')")
+	@SaCheckPermission("sys_menu_edit")
 	public R<Boolean> update(@Valid @RequestBody SysMenu sysMenu) {
 		return R.ok(sysMenuService.updateMenuById(sysMenu));
 	}
@@ -135,7 +133,7 @@ public class MenuController {
 	 */
 	@SysLog("清除菜单缓存")
 	@DeleteMapping("/cache")
-	@PreAuthorize("@pms.hasPermission('sys_menu_del')")
+	@SaCheckPermission("sys_menu_del")
 	public R clearMenuCache() {
 		sysMenuService.clearMenuCache();
 		return R.ok();

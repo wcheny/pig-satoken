@@ -20,10 +20,10 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.wangchenyang.admin.api.dto.UserDTO;
-import com.wangchenyang.admin.api.dto.UserInfo;
 import com.wangchenyang.admin.api.entity.SysUser;
 import com.wangchenyang.admin.api.vo.UserExcelVO;
 import com.wangchenyang.admin.api.vo.UserVO;
+import com.wangchenyang.common.core.dto.LoginUser;
 import com.wangchenyang.common.core.util.R;
 import org.springframework.validation.BindingResult;
 
@@ -41,7 +41,7 @@ public interface SysUserService extends IService<SysUser> {
 	 * @param sysUser 用户
 	 * @return userInfo
 	 */
-	UserInfo getUserInfo(SysUser sysUser);
+	LoginUser getUserInfo(SysUser sysUser);
 
 	/**
 	 * 分页查询用户信息（含有角色信息）

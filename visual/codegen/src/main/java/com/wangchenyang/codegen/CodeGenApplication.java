@@ -18,7 +18,6 @@ package com.wangchenyang.codegen;
 
 import com.wangchenyang.common.datasource.annotation.EnableDynamicDataSource;
 import com.wangchenyang.common.feign.annotation.EnableYifanFeignClients;
-import com.wangchenyang.common.security.annotation.EnableYifanResourceServer;
 import com.wangchenyang.common.swagger.annotation.EnableYifanDoc;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -33,7 +32,6 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @EnableYifanFeignClients
 @EnableDiscoveryClient
 @SpringBootApplication
-@EnableYifanResourceServer
 public class CodeGenApplication {
 
 	public static void main(String[] args) {

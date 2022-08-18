@@ -16,15 +16,16 @@
 
 package com.wangchenyang.admin.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ArrayUtil;
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wangchenyang.admin.api.dto.UserDTO;
-import com.wangchenyang.admin.api.dto.UserInfo;
 import com.wangchenyang.admin.api.entity.*;
 import com.wangchenyang.admin.api.util.ParamResolver;
 import com.wangchenyang.admin.api.vo.UserExcelVO;
@@ -35,6 +36,8 @@ import com.wangchenyang.admin.service.SysUserService;
 import com.wangchenyang.common.core.constant.CacheConstants;
 import com.wangchenyang.common.core.constant.CommonConstants;
 import com.wangchenyang.common.core.constant.enums.MenuTypeEnum;
+import com.wangchenyang.common.core.constant.enums.UserType;
+import com.wangchenyang.common.core.dto.LoginUser;
 import com.wangchenyang.common.core.exception.ErrorCodes;
 import com.wangchenyang.common.core.util.MsgUtils;
 import com.wangchenyang.common.core.util.R;
@@ -115,15 +118,20 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 	 * @return
 	 */
 	@Override
-	public UserInfo getUserInfo(SysUser sysUser) {
-		UserInfo userInfo = new UserInfo();
-		userInfo.setSysUser(sysUser);
+	public LoginUser getUserInfo(SysUser sysUser) {
+		LoginUser userInfo = new LoginUser();
+		userInfo.setUserId(sysUser.getUserId());
+		userInfo.setUsername(sysUser.getUsername());
+		userInfo.setDeptId(sysUser.getDeptId());
+		userInfo.setUserType(UserType.SYS_USER.getUserType());
+		userInfo.setPassword(sysUser.getPassword());
 		// 设置角色列表
 		List<SysRole> roleList = sysRoleMapper.listRolesByUserId(sysUser.getUserId());
 		userInfo.setRoleList(roleList);
 		// 设置角色列表 （ID）
 		List<Long> roleIds = roleList.stream().map(SysRole::getRoleId).collect(Collectors.toList());
-		userInfo.setRoles(ArrayUtil.toArray(roleIds, Long.class));
+		userInfo.setRoles(roleList.stream().map(SysRole::getRoleCode).collect(Collectors.toList()));
+		userInfo.setRoleIds(roleIds);
 		// 设置岗位列表
 		List<SysPost> postList = sysPostMapper.listPostsByUserId(sysUser.getUserId());
 		userInfo.setPostList(postList);
@@ -131,7 +139,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 		Set<String> permissions = roleIds.stream().map(sysMenuService::findMenuByRoleId).flatMap(Collection::stream)
 				.filter(m -> MenuTypeEnum.BUTTON.getType().equals(m.getType())).map(SysMenu::getPermission)
 				.filter(StrUtil::isNotBlank).collect(Collectors.toSet());
-		userInfo.setPermissions(ArrayUtil.toArray(permissions, String.class));
+		userInfo.setMenuPermissions(new ArrayList<>(permissions));
+
 
 		return userInfo;
 	}

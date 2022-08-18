@@ -20,6 +20,7 @@ import com.wangchenyang.admin.api.entity.SysUser;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author lengleng
@@ -39,11 +40,11 @@ public class UserInfoVO implements Serializable {
 	/**
 	 * 权限标识集合
 	 */
-	private String[] permissions;
+	private List<String> permissions;
 
 	/**
 	 * 角色集合
 	 */
-	private Long[] roles;
+	private List<Long> roles;
 
 }

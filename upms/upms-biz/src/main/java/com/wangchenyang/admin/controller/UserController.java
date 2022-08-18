@@ -22,22 +22,20 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wangchenyang.admin.api.dto.UserDTO;
-import com.wangchenyang.admin.api.dto.UserInfo;
 import com.wangchenyang.admin.api.entity.SysUser;
 import com.wangchenyang.admin.api.vo.UserExcelVO;
 import com.wangchenyang.admin.api.vo.UserInfoVO;
 import com.wangchenyang.admin.api.vo.UserVO;
 import com.wangchenyang.admin.service.SysUserService;
+import com.wangchenyang.common.core.dto.LoginUser;
 import com.wangchenyang.common.core.exception.ErrorCodes;
 import com.wangchenyang.common.core.util.MsgUtils;
 import com.wangchenyang.common.core.util.R;
 import com.wangchenyang.common.log.annotation.SysLog;
-import com.wangchenyang.common.security.annotation.Inner;
-import com.wangchenyang.common.security.util.SecurityUtils;
+import com.wangchenyang.common.satoken.utils.LoginHelper;
+
 import com.pig4cloud.plugin.excel.annotation.RequestExcel;
 import com.pig4cloud.plugin.excel.annotation.ResponseExcel;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -55,8 +53,6 @@ import java.util.Set;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/user")
-@Tag(name = "用户管理模块")
-@SecurityRequirement(name = HttpHeaders.AUTHORIZATION)
 public class UserController {
 
 	private final SysUserService userService;
@@ -67,16 +63,16 @@ public class UserController {
 	 */
 	@GetMapping(value = { "/info" })
 	public R<UserInfoVO> info() {
-		String username = SecurityUtils.getUser().getUsername();
+		String username = LoginHelper.getUsername();
 		SysUser user = userService.getOne(Wrappers.<SysUser>query().lambda().eq(SysUser::getUsername, username));
 		if (user == null) {
 			return R.failed(MsgUtils.getMessage(ErrorCodes.SYS_USER_QUERY_ERROR));
 		}
-		UserInfo userInfo = userService.getUserInfo(user);
+		LoginUser userInfo = userService.getUserInfo(user);
 		UserInfoVO vo = new UserInfoVO();
-		vo.setSysUser(userInfo.getSysUser());
-		vo.setRoles(userInfo.getRoles());
-		vo.setPermissions(userInfo.getPermissions());
+		vo.setSysUser(user);
+		vo.setRoles(userInfo.getRoleIds());
+		vo.setPermissions(userInfo.getMenuPermissions());
 		return R.ok(vo);
 	}
 
@@ -84,9 +80,8 @@ public class UserController {
 	 * 获取指定用户全部信息
 	 * @return 用户信息
 	 */
-	@Inner
 	@GetMapping("/info/{username}")
-	public R<UserInfo> info(@PathVariable String username) {
+	public R<LoginUser> info(@PathVariable String username) {
 		SysUser user = userService.getOne(Wrappers.<SysUser>query().lambda().eq(SysUser::getUsername, username));
 		if (user == null) {
 			return R.failed(MsgUtils.getMessage(ErrorCodes.SYS_USER_USERINFO_EMPTY, username));
@@ -99,7 +94,6 @@ public class UserController {
 	 * @param deptIds 部门id 集合
 	 * @return 用户 id 集合
 	 */
-	@Inner
 	@GetMapping("/ids")
 	public R<List<Long>> listUserIdByDeptIds(@RequestParam("deptIds") Set<Long> deptIds) {
 		return R.ok(userService.listUserIdByDeptIds(deptIds));
@@ -120,7 +114,6 @@ public class UserController {
 	 * @param userDTO 查询条件
 	 * @return
 	 */
-	@Inner(false)
 	@GetMapping("/check/exsit")
 	public R<Boolean> isExsit(UserDTO userDTO) {
 		List<SysUser> sysUserList = userService.list(new QueryWrapper<>(userDTO));
@@ -186,7 +179,7 @@ public class UserController {
 	@SysLog("修改个人信息")
 	@PutMapping("/edit")
 	public R<Boolean> updateUserInfo(@Valid @RequestBody UserDTO userDto) {
-		userDto.setUsername(SecurityUtils.getUser().getUsername());
+		userDto.setUsername(LoginHelper.getUsername());
 		return R.ok(userService.updateUserInfo(userDto));
 	}
 

@@ -44,7 +44,7 @@ public class ParamResolver {
 
 		RemoteParamService remoteParamService = SpringContextHolder.getBean(RemoteParamService.class);
 
-		String result = remoteParamService.getByKey(key, SecurityConstants.FROM_IN).getData();
+		String result = remoteParamService.getByKey(key).getData();
 
 		if (StrUtil.isNotBlank(result)) {
 			return Convert.convert(clazz, result);

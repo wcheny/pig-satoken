@@ -41,10 +41,10 @@
             <groupId>com.wangchenyang</groupId>
             <artifactId>upms-api</artifactId>
         </dependency>
-        <!--安全依赖获取上下文信息-->
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-core</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>com.wangchenyang</groupId>
+			<artifactId>common-security</artifactId>
+			<optional>true</optional>
+		</dependency>
     </dependencies>
 </project>

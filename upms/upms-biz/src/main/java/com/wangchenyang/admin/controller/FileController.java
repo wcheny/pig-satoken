@@ -17,6 +17,7 @@
 
 package com.wangchenyang.admin.controller;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.hutool.core.io.IoUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -25,10 +26,6 @@ import com.wangchenyang.admin.api.entity.SysFile;
 import com.wangchenyang.admin.service.SysFileService;
 import com.wangchenyang.common.core.util.R;
 import com.wangchenyang.common.log.annotation.SysLog;
-import com.wangchenyang.common.security.annotation.Inner;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.core.io.ClassPathResource;
@@ -48,8 +45,6 @@ import javax.servlet.http.HttpServletResponse;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/sys-file")
-@Tag(name = "文件管理模块")
-@SecurityRequirement(name = HttpHeaders.AUTHORIZATION)
 public class FileController {
 
 	private final SysFileService sysFileService;
@@ -60,7 +55,6 @@ public class FileController {
 	 * @param sysFile 文件管理
 	 * @return
 	 */
-	@Operation(summary = "分页查询", description = "分页查询")
 	@GetMapping("/page")
 	public R<IPage<SysFile>> getSysFilePage(Page page, SysFile sysFile) {
 		return R.ok(sysFileService.page(page, Wrappers.query(sysFile)));
@@ -71,10 +65,9 @@ public class FileController {
 	 * @param id id
 	 * @return R
 	 */
-	@Operation(summary = "通过id删除文件管理", description = "通过id删除文件管理")
 	@SysLog("删除文件管理")
 	@DeleteMapping("/{id:\\d+}")
-	@PreAuthorize("@pms.hasPermission('sys_file_del')")
+	@SaCheckPermission("sys_file_del")
 	public R<Boolean> removeById(@PathVariable Long id) {
 		return R.ok(sysFileService.deleteFile(id));
 	}
@@ -96,7 +89,6 @@ public class FileController {
 	 * @param response
 	 * @return
 	 */
-	@Inner(false)
 	@GetMapping("/{bucket}/{fileName}")
 	public void file(@PathVariable String bucket, @PathVariable String fileName, HttpServletResponse response) {
 		sysFileService.getFile(bucket, fileName, response);
@@ -121,7 +113,6 @@ public class FileController {
 	 * @param fileName
 	 * @return
 	 */
-	@Inner(false)
 	@GetMapping("/online/{bucket}/{fileName}")
 	public R<String> onlineFile(@PathVariable String bucket, @PathVariable String fileName) {
 		return R.ok(sysFileService.onlineFile(bucket, fileName));
