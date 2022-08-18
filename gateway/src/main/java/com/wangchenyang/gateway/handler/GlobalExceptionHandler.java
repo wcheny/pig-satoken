@@ -53,7 +53,7 @@ public class GlobalExceptionHandler implements ErrorWebExceptionHandler {
 		if (response.isCommitted()) {
 			return Mono.error(ex);
 		}
-		String msg;
+		String msg=ex.getMessage();
 		// header set
 		response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
 		if (ex instanceof NotFoundException) {
@@ -62,8 +62,6 @@ public class GlobalExceptionHandler implements ErrorWebExceptionHandler {
 			ResponseStatusException responseStatusException = (ResponseStatusException) ex;
 			msg = responseStatusException.getMessage();
 			response.setStatusCode(responseStatusException.getStatus());
-		} else {
-			msg = ex.getMessage();
 		}
 
 		log.error("[网关异常处理]请求路径:{},异常信息:{}", exchange.getRequest().getPath(), ex.getMessage());

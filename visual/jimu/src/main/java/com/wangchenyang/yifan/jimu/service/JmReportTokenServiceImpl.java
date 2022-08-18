@@ -26,9 +26,8 @@ public class JmReportTokenServiceImpl implements JmReportTokenServiceI {
 		if (StrUtil.isBlank(token)) {
 			return false;
 		}
-		Object loginId = StpUtil.getLoginIdByToken(token);
 		// 令牌不存在
-		if (loginId == null) {
+		if (StpUtil.getLoginIdByToken(token) == null) {
 			return false;
 		}
 		return true;
@@ -36,6 +35,6 @@ public class JmReportTokenServiceImpl implements JmReportTokenServiceI {
 
 	@Override
 	public String getUsername(String token) {
-		return "admin";
+		return LoginHelper.getUsername(token);
 	}
 }

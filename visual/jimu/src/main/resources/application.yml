@@ -1,9 +1,5 @@
 server:
   port: 7001
-jeecg :
-  jmreport:
-    #自定义项目前缀
-    customPrePath: /jimu
 
 spring:
   application:
@@ -13,21 +9,10 @@ spring:
       discovery:
         server-addr: ${NACOS_HOST:nacos}:${NACOS_PORT:8848}
         namespace: @nacos.namespace@
-  datasource:
-    type: com.zaxxer.hikari.HikariDataSource
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: root
-    url: jdbc:mysql://mysql:3306/jimureport?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowMultiQueries=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true&allowPublicKeyRetrieval=true
-
-## spring security 配置
-security:
-  oauth2:
-    client:
-      client-id: ENC(27v1agvAug87ANOVnbKdsw==)
-      client-secret: ENC(VbnkopxrwgbFVKp+UxJ2pg==)
-      scope: server
-    # 直接放行URL
-    ignore:
-      urls:
-        - /jmreport/**
+      config:
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        namespace: @nacos.namespace@
+  config:
+    import:
+      - nacos:application-@profiles.active@.yml
+      - nacos:${spring.application.name}-@profiles.active@.yml

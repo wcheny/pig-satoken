@@ -18,7 +18,6 @@ package com.wangchenyang.codegen;
 
 import com.wangchenyang.common.datasource.annotation.EnableDynamicDataSource;
 import com.wangchenyang.common.feign.annotation.EnableYifanFeignClients;
-import com.wangchenyang.common.swagger.annotation.EnableYifanDoc;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -27,7 +26,6 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  * @author lengleng
  * @date 2020/03/11 代码生成模块
  */
-@EnableYifanDoc
 @EnableDynamicDataSource
 @EnableYifanFeignClients
 @EnableDiscoveryClient

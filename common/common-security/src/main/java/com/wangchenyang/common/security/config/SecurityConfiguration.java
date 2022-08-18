@@ -7,7 +7,6 @@ import cn.dev33.satoken.interceptor.SaAnnotationInterceptor;
 import cn.dev33.satoken.router.SaRouter;
 import cn.hutool.json.JSONUtil;
 import com.wangchenyang.common.core.util.R;
-import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
@@ -16,8 +15,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * 权限安全配置
- *
- * @author Lion Li
  */
 @AutoConfiguration
 @Component

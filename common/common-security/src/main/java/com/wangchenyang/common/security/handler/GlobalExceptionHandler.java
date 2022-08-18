@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * 全局异常处理器
  *
- * @author ruoyi
  */
 @Slf4j
 @RestControllerAdvice

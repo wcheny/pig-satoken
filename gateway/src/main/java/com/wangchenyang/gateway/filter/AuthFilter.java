@@ -13,9 +13,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * [Sa-Token 权限认证] 拦截器
+ * Sa-Token 拦截器
  *
- * @author Lion Li
  */
 @Configuration
 public class AuthFilter {
@@ -37,12 +36,6 @@ public class AuthFilter {
                     .check(r -> {
                         // 检查是否登录 是否有token
                         StpUtil.checkLogin();
-
-                        // 有效率影响 用于临时测试
-                        // if (log.isDebugEnabled()) {
-                        //     log.debug("剩余有效时间: {}", StpUtil.getTokenTimeout());
-                        //     log.debug("临时有效时间: {}", StpUtil.getTokenActivityTimeout());
-                        // }
                     });
             }).setError(e -> {
 					SaHolder.getResponse().setHeader("Content-Type", "application/json;charset=UTF-8");

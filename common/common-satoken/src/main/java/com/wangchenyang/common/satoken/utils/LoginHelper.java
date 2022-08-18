@@ -71,6 +71,13 @@ public class LoginHelper {
         return loginUser;
     }
 
+	/**
+	 * 获取用户
+	 */
+	public static LoginUser getLoginUser(String token) {
+		return (LoginUser) StpUtil.getTokenSessionByToken(token).get(LOGIN_USER_KEY);
+	}
+
     /**
      * 获取用户id
      */
@@ -78,14 +85,9 @@ public class LoginHelper {
         LoginUser loginUser = getLoginUser();
         if (ObjectUtil.isNull(loginUser)) {
             String loginId = StpUtil.getLoginIdAsString();
-            String userId = null;
-            for (UserType value : UserType.values()) {
-                if (StrUtil.contains(loginId, value.getUserType())) {
-                    String[] strs = StringUtils.split(loginId, JOIN_CODE);
-                    // 用户id在总是在最后
-                    userId = strs[strs.length - 1];
-                }
-            }
+			String[] strs = StringUtils.split(loginId, JOIN_CODE);
+			// 用户id在总是在最后
+			String userId = strs[strs.length - 1];
             if (StrUtil.isBlank(userId)) {
                 throw new RuntimeException("登录用户: LoginId异常 => " + loginId);
             }
@@ -107,6 +109,10 @@ public class LoginHelper {
     public static String getUsername() {
         return getLoginUser().getUsername();
     }
+
+	public static String getUsername(String token) {
+		return getLoginUser(token).getUsername();
+	}
 
     /**
      * 获取用户类型

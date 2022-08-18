@@ -20,13 +20,13 @@ import com.baomidou.mybatisplus.autoconfigure.ConfigurationCustomizer;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.wangchenyang.common.mybatis.config.MybatisPlusMetaObjectHandler;
-import com.wangchenyang.common.mybatis.plugins.ReadInterceptor;
+import com.wangchenyang.common.mybatis.plugins.DecryptFieldInterceptor;
+import com.wangchenyang.common.mybatis.plugins.EncryptFieldInterceptor;
 import com.wangchenyang.common.mybatis.plugins.YifanPaginationInnerInterceptor;
 import com.wangchenyang.common.mybatis.resolver.SqlFilterArgumentResolver;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.util.StringUtils;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -46,9 +46,9 @@ public class MybatisAutoConfiguration implements WebMvcConfigurer {
 	@Bean
 	public ConfigurationCustomizer configurationCustomizer() {
 		return configuration -> {
-			//插件拦截链采用了责任链模式，执行顺序和加入连接链的顺序有关
-			ReadInterceptor readInterceptor = new ReadInterceptor();
-			configuration.addInterceptor(readInterceptor);
+			//注入参数入库加解密拦截器
+			configuration.addInterceptor(new EncryptFieldInterceptor());
+			configuration.addInterceptor(new DecryptFieldInterceptor());
 		};
 	}
 

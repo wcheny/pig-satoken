@@ -1,7 +1,6 @@
 package com.wangchenyang.auth.form;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
@@ -9,7 +8,6 @@ import javax.validation.constraints.NotBlank;
 /**
  * 用户登录对象
  *
- * @author Lion Li
  */
 @Data
 public class LoginBody {

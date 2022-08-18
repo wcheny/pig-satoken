@@ -64,7 +64,7 @@ import java.util.function.Function;
 @Component
 public class PasswordDecoderFilter extends AbstractGatewayFilterFactory<Object> {
 
-	private final static String[] DECODEPWD_URL = new String[]{"/auth/login"};
+	private final static String[] URL = new String[]{"/auth/login"};
 
 	private static final List<HttpMessageReader<?>> messageReaders = HandlerStrategies.withDefaults().messageReaders();
 
@@ -79,7 +79,7 @@ public class PasswordDecoderFilter extends AbstractGatewayFilterFactory<Object> 
 		return (exchange, chain) -> {
 			ServerHttpRequest request = exchange.getRequest();
 			// 1. 不是登录请求，直接向下执行
-			if (!StrUtil.containsAnyIgnoreCase(request.getURI().getPath(), DECODEPWD_URL)) {
+			if (!StrUtil.containsAnyIgnoreCase(request.getURI().getPath(), URL)) {
 				return chain.filter(exchange);
 			}
 			// 3. 前端加密密文解密逻辑

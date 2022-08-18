@@ -25,6 +25,14 @@ public class GatewayConfigProperties {
 	 * 网关解密登录前端密码 秘钥 {@link PasswordDecoderFilter}
 	 */
 	private String encodeKey;
+	/**
+	 * 是否校验验证码
+	 *
+	 * @author 王晨阳
+	 * @version 1.0
+	 * @date 2022/8/18 20:37
+	 * @desc
+	**/
 	private boolean validateCode;
 
 }

@@ -19,32 +19,23 @@ package com.wangchenyang.gateway.filter;
 import cn.hutool.core.text.CharSequenceUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wangchenyang.common.core.constant.CacheConstants;
-import com.wangchenyang.common.core.constant.SecurityConstants;
 import com.wangchenyang.common.core.exception.ValidateCodeException;
-import com.wangchenyang.common.core.util.R;
-import com.wangchenyang.common.core.util.WebUtils;
 import com.wangchenyang.common.redis.utils.RedisUtils;
 import com.wangchenyang.gateway.config.properties.GatewayConfigProperties;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
-import org.springframework.core.io.buffer.DataBuffer;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.server.reactive.ServerHttpRequest;
-import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Mono;
 
 /**
  * The type Validate code gateway filter.
  *
- * @author lengleng
+ * @authoC lengleng
  * @date 2018 /7/4 验证码处理
  */
 @Slf4j
@@ -52,16 +43,16 @@ import reactor.core.publisher.Mono;
 @Component
 public class ValidateCodeGatewayFilter extends AbstractGatewayFilterFactory<Object> {
 
-	private final static String[] VALIDATE_URL = new String[]{"/auth/login"};
-
 	private final GatewayConfigProperties gatewayConfig;
+
+	private final static String[] URL = new String[]{"/auth/login"};
 
 	@Override
 	public GatewayFilter apply(Object config) {
 		return (exchange, chain) -> {
 			ServerHttpRequest request = exchange.getRequest();
 			// 非登录请求，不处理
-			if (StrUtil.equalsAnyIgnoreCase(request.getURI().getPath(), VALIDATE_URL)&&gatewayConfig.isValidateCode()) {
+			if (StrUtil.equalsAnyIgnoreCase(request.getURI().getPath(), URL)&&gatewayConfig.isValidateCode()) {
 				checkCode(request);
 			}
 			return chain.filter(exchange);
@@ -82,7 +73,7 @@ public class ValidateCodeGatewayFilter extends AbstractGatewayFilterFactory<Obje
 		RedisUtils.deleteObject(key);
 
 		if (ObjectUtil.isEmpty(codeObj) || !code.equals(codeObj)) {
-			throw new ValidateCodeException("验证码不合法");
+			throw new ValidateCodeException("验证码错误");
 		}
 	}
 

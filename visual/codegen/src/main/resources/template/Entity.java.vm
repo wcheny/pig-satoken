@@ -27,7 +27,7 @@ public class ${className} extends BaseEntity {
      * $column.comments
      */
 #if($column.columnName == $pk.columnName)
-    @TableId(type = IdType.ASSIGN_ID)
+    @TableId(type = IdType.AUTO)
 #end
     private $column.attrType $column.lowerAttrName;
 
