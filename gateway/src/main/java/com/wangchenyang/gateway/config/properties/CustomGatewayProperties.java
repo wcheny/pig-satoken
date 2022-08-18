@@ -15,9 +15,9 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "spring.cloud.gateway")
 public class CustomGatewayProperties {
 
-    /**
-     * 请求日志
-     */
-    private Boolean requestLog;
+	/**
+	 * 请求日志
+	 */
+	private Boolean requestLog;
 
 }

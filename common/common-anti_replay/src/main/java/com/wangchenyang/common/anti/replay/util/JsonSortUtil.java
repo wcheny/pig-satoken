@@ -13,10 +13,9 @@ import java.util.Map;
  * @Version: v1.0
  */
 public class JsonSortUtil {
+
 	/**
-	 * 对单词列表进行冒泡排序
-	 * 直接操作对象地址 无需返回
-	 *
+	 * 对单词列表进行冒泡排序 直接操作对象地址 无需返回
 	 * @param words ["name","age"]
 	 */
 	private static void wordSort(ArrayList<String> words) {
@@ -33,7 +32,6 @@ public class JsonSortUtil {
 
 	/**
 	 * 对单层json排序
-	 *
 	 * @param json
 	 */
 	private static JSONObject getAloneKeys(JSONObject json) {
@@ -53,7 +51,6 @@ public class JsonSortUtil {
 
 	/**
 	 * 递归每一层（当前是判断下一层是JSONObject类型的场景）
-	 *
 	 * @param json
 	 * @return
 	 */
@@ -71,9 +68,7 @@ public class JsonSortUtil {
 	}
 
 	/**
-	 * 对JSONObject的key根据首字母排序 若首字母相同对比下一个字母 依次类推
-	 * 备注：当前未覆盖JSONArray的场景
-	 *
+	 * 对JSONObject的key根据首字母排序 若首字母相同对比下一个字母 依次类推 备注：当前未覆盖JSONArray的场景
 	 * @param json
 	 * @return 排序后的新json
 	 */
@@ -89,7 +84,6 @@ public class JsonSortUtil {
 		}
 		return jsonAlone;
 	}
-
 
 	public static void main(String[] args) {
 		String jsonStr = "{\"code\":200,\"message\":\"success\",\"data\":{\"bate\":\"bate值\",\"baae\":{\"case\":\"case值\",\"casa\":{\"ask\":\"ask值\",\"bsk\":{\"abcdefghijklmn\":\"abcdefghijklmn值\",\"abcdefghijklma\":\"abcdefghijklma值\"}}}}}\n";

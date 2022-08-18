@@ -53,12 +53,13 @@ public class GlobalExceptionHandler implements ErrorWebExceptionHandler {
 		if (response.isCommitted()) {
 			return Mono.error(ex);
 		}
-		String msg=ex.getMessage();
+		String msg = ex.getMessage();
 		// header set
 		response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
 		if (ex instanceof NotFoundException) {
 			msg = "服务未找到";
-		} else if (ex instanceof ResponseStatusException) {
+		}
+		else if (ex instanceof ResponseStatusException) {
 			ResponseStatusException responseStatusException = (ResponseStatusException) ex;
 			msg = responseStatusException.getMessage();
 			response.setStatusCode(responseStatusException.getStatus());

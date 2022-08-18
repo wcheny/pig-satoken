@@ -21,7 +21,7 @@ public class LoginService {
 	public R login(LoginBody loginBody) {
 		R<LoginUser> result = remoteUserService.info(loginBody.getUsername());
 		LoginUser userInfo = RetOps.of(result).getData().orElseThrow(() -> new RuntimeException(result.getMsg()));
-		if(!BCrypt.checkpw(loginBody.getPassword(), userInfo.getPassword())){
+		if (!BCrypt.checkpw(loginBody.getPassword(), userInfo.getPassword())) {
 			return R.failed("密码错误");
 		}
 		// 获取登录token
@@ -36,4 +36,5 @@ public class LoginService {
 		LoginHelper.loginByDevice(userInfo, DeviceType.PC);
 		return R.ok(StpUtil.getTokenValue());
 	}
+
 }

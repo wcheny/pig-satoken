@@ -23,25 +23,22 @@ public class SecurityConfiguration implements WebMvcConfigurer {
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		// 注解拦截器
-		registry.addInterceptor(new SaAnnotationInterceptor())
-				.addPathPatterns("/**");
+		registry.addInterceptor(new SaAnnotationInterceptor()).addPathPatterns("/**");
 	}
-    /**
-     * 校验是否从网关转发
-     */
-    @Bean
-    public SaServletFilter getSaServletFilter() {
-        return new SaServletFilter()
-				.addInclude("/**")
-				.addExclude( "/actuator/**")
-            .setAuth(obj -> {
-				SaRouter.match("/**").check(SaIdUtil::checkCurrentRequestToken);
-			}).setError(e -> {
-				SaHolder.getResponse().setHeader("Content-Type", "application/json;charset=UTF-8");
-				SaHolder.getResponse().setStatus(424);
-				// 使用封装的 JSON 工具类转换数据格式
-				return JSONUtil.toJsonStr(R.failed("认证失败，无法访问系统资源") );
-			});
-    }
+
+	/**
+	 * 校验是否从网关转发
+	 */
+	@Bean
+	public SaServletFilter getSaServletFilter() {
+		return new SaServletFilter().addInclude("/**").addExclude("/actuator/**").setAuth(obj -> {
+			SaRouter.match("/**").check(SaIdUtil::checkCurrentRequestToken);
+		}).setError(e -> {
+			SaHolder.getResponse().setHeader("Content-Type", "application/json;charset=UTF-8");
+			SaHolder.getResponse().setStatus(424);
+			// 使用封装的 JSON 工具类转换数据格式
+			return JSONUtil.toJsonStr(R.failed("认证失败，无法访问系统资源"));
+		});
+	}
 
 }

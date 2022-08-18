@@ -8,8 +8,11 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class RedisConfigProperties {
 
 	private String password;
+
 	private String database;
-	private int port=6379;
+
+	private int port = 6379;
+
 	private String host;
 
 }

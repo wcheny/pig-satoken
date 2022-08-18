@@ -141,7 +141,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 				.filter(StrUtil::isNotBlank).collect(Collectors.toSet());
 		userInfo.setMenuPermissions(new ArrayList<>(permissions));
 
-
 		return userInfo;
 	}
 

@@ -8,16 +8,16 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.ComponentScan;
 
 /**
-* @author pig archetype
-* <p>
-* 项目启动类
-*/
+ * @author pig archetype
+ * <p>
+ * 项目启动类
+ */
 @EnableDiscoveryClient
-@SpringBootApplication(exclude = {MongoAutoConfiguration.class})
+@SpringBootApplication(exclude = { MongoAutoConfiguration.class })
 public class JimuApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(JimuApplication.class, args);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(JimuApplication.class, args);
+	}
 
 }

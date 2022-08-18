@@ -45,14 +45,14 @@ public class ValidateCodeGatewayFilter extends AbstractGatewayFilterFactory<Obje
 
 	private final GatewayConfigProperties gatewayConfig;
 
-	private final static String[] URL = new String[]{"/auth/login"};
+	private final static String[] URL = new String[] { "/auth/login" };
 
 	@Override
 	public GatewayFilter apply(Object config) {
 		return (exchange, chain) -> {
 			ServerHttpRequest request = exchange.getRequest();
 			// 非登录请求，不处理
-			if (StrUtil.equalsAnyIgnoreCase(request.getURI().getPath(), URL)&&gatewayConfig.isValidateCode()) {
+			if (StrUtil.equalsAnyIgnoreCase(request.getURI().getPath(), URL) && gatewayConfig.isValidateCode()) {
 				checkCode(request);
 			}
 			return chain.filter(exchange);

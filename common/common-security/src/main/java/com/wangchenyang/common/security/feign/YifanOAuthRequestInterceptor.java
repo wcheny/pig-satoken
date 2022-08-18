@@ -37,7 +37,7 @@ public class YifanOAuthRequestInterceptor implements RequestInterceptor {
 	 */
 	@Override
 	public void apply(RequestTemplate template) {
-		template.header(SaIdUtil.ID_TOKEN,SaIdUtil.getToken());
+		template.header(SaIdUtil.ID_TOKEN, SaIdUtil.getToken());
 	}
 
 }

@@ -14,9 +14,9 @@ import org.springframework.core.annotation.Order;
 @Configuration
 public class JmReportConfiguration {
 
-    @Bean
-    public JmReportTokenServiceI jmReportTokenService() {
-        return new JmReportTokenServiceImpl();
-    }
+	@Bean
+	public JmReportTokenServiceI jmReportTokenService() {
+		return new JmReportTokenServiceImpl();
+	}
 
 }

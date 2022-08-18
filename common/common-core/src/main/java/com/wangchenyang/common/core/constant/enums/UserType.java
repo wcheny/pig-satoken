@@ -13,19 +13,20 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum UserType {
 
-    /**
-     * pc端
-     */
-    SYS_USER("sys_user");
+	/**
+	 * pc端
+	 */
+	SYS_USER("sys_user");
 
-    private final String userType;
+	private final String userType;
 
-    public static UserType getUserType(String str) {
-        for (UserType value : values()) {
-            if (StrUtil.contains(str, value.getUserType())) {
-                return value;
-            }
-        }
-        throw new RuntimeException("'用户类型错误：" + str);
-    }
+	public static UserType getUserType(String str) {
+		for (UserType value : values()) {
+			if (StrUtil.contains(str, value.getUserType())) {
+				return value;
+			}
+		}
+		throw new RuntimeException("'用户类型错误：" + str);
+	}
+
 }

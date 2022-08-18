@@ -44,6 +44,7 @@ public class ApiLoggingFilter implements GlobalFilter, Ordered {
 	private static final String START_TIME = "startTime";
 
 	private static final String X_REAL_IP = "X-Real-IP";// nginx需要配置
+
 	@Autowired
 	private CustomGatewayProperties customGatewayProperties;
 
@@ -54,7 +55,7 @@ public class ApiLoggingFilter implements GlobalFilter, Ordered {
 		}
 		ServerHttpRequest request = exchange.getRequest();
 		String url = request.getMethod().name() + " " + getOriginalRequestUrl(exchange);
-		log.debug("开始请求 => URL:[{}],参数:[{}]",url, request.getQueryParams());
+		log.debug("开始请求 => URL:[{}],参数:[{}]", url, request.getQueryParams());
 		exchange.getAttributes().put(START_TIME, System.currentTimeMillis());
 		return chain.filter(exchange).then(Mono.fromRunnable(() -> {
 			Long startTime = exchange.getAttribute(START_TIME);
@@ -67,7 +68,7 @@ public class ApiLoggingFilter implements GlobalFilter, Ordered {
 				if (exchange.getResponse().getStatusCode() != null) {
 					code = exchange.getResponse().getStatusCode().value();
 				}
-				log.debug("结束请求 => IP地址[{}],URL[{}],响应状态码：[{}],耗时:[{}]毫秒",ip, api,code, executeTime);
+				log.debug("结束请求 => IP地址[{}],URL[{}],响应状态码：[{}],耗时:[{}]毫秒", ip, api, code, executeTime);
 			}
 		}));
 	}

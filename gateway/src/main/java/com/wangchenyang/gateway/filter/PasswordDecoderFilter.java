@@ -64,7 +64,7 @@ import java.util.function.Function;
 @Component
 public class PasswordDecoderFilter extends AbstractGatewayFilterFactory<Object> {
 
-	private final static String[] URL = new String[]{"/auth/login"};
+	private final static String[] URL = new String[] { "/auth/login" };
 
 	private static final List<HttpMessageReader<?>> messageReaders = HandlerStrategies.withDefaults().messageReaders();
 
@@ -115,8 +115,9 @@ public class PasswordDecoderFilter extends AbstractGatewayFilterFactory<Object> 
 					new SecretKeySpec(gatewayConfig.getEncodeKey().getBytes(), KEY_ALGORITHM),
 					new IvParameterSpec(gatewayConfig.getEncodeKey().getBytes()));
 			// 获取请求密码并解密
-			Map<String, String> inParamsMap=JSONUtil.isTypeJSONObject((String) s)?JSONUtil.toBean((String) s,Map.class)
-					:HttpUtil.decodeParamMap((String) s, CharsetUtil.CHARSET_UTF_8);
+			Map<String, String> inParamsMap = JSONUtil.isTypeJSONObject((String) s)
+					? JSONUtil.toBean((String) s, Map.class)
+					: HttpUtil.decodeParamMap((String) s, CharsetUtil.CHARSET_UTF_8);
 			if (inParamsMap.containsKey(PASSWORD)) {
 				String password = aes.decryptStr(inParamsMap.get(PASSWORD));
 				// 返回修改后报文字符

@@ -48,10 +48,12 @@ public interface CacheConstants {
 	 * 参数缓存
 	 */
 	String PARAMS_DETAILS = "params_details";
+
 	/**
 	 * 登录用户 redis key
 	 */
 	String LOGIN_TOKEN_KEY = "Authorization:login:token:";
+
 	/**
 	 * 在线用户 redis key
 	 */

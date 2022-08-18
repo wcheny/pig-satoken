@@ -71,7 +71,8 @@ public class MybatisPlusMetaObjectHandler implements MetaObjectHandler {
 	private String getUserName() {
 		try {
 			return LoginHelper.getUsername();
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			return null;
 		}
 	}

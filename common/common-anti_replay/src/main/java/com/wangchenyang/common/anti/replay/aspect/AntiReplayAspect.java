@@ -28,51 +28,48 @@ import javax.servlet.http.HttpServletRequest;
 @Component
 public class AntiReplayAspect {
 
-    private final ReplayProperties props;
-    private final String servletContextPath;
+	private final ReplayProperties props;
 
-    AntiReplayAspect(ReplayProperties props, Environment env) {
-        this.props = props;
-        this.servletContextPath = env.getProperty("server.servlet.context-path");
-    }
+	private final String servletContextPath;
 
-    @Around(value = "@annotation(narutoSecurity)")
-    public Object around(ProceedingJoinPoint point, NarutoAntiReplay narutoSecurity)
-            throws Throwable {
+	AntiReplayAspect(ReplayProperties props, Environment env) {
+		this.props = props;
+		this.servletContextPath = env.getProperty("server.servlet.context-path");
+	}
 
-        HttpServletRequest request = getHttpServletRequest();
-        // 签名验证
-        if (narutoSecurity.checkSignature()) {
-            SignatureValidator.builder().arguments(point.getArgs()).data(request).execute();
-        }
+	@Around(value = "@annotation(narutoSecurity)")
+	public Object around(ProceedingJoinPoint point, NarutoAntiReplay narutoSecurity) throws Throwable {
 
-        // 禁止重放验证
-        if (narutoSecurity.antiReplay()) {
-            // 请求路径
-            String targetUrl = StringUtils.replace(request.getRequestURI(), servletContextPath, "");
+		HttpServletRequest request = getHttpServletRequest();
+		// 签名验证
+		if (narutoSecurity.checkSignature()) {
+			SignatureValidator.builder().arguments(point.getArgs()).data(request).execute();
+		}
 
-            try (AntiReplayValidator.AntiReplayWorker worker =
-                         AntiReplayValidator.builder()
-                                 .methodName(SpringUtils.getMethodName(point))
-                                 .nonce(request.getHeader(props.getHeaderKey().getNonce()))
-                                 .url(request.getHeader(props.getHeaderKey().getUrl()))
-                                 .targetUrl(targetUrl)
-                                 .timestamp(
-                                         ConvertUtils.StringToLong(
-                                                 request.getHeader(props.getHeaderKey().getTimestamp())))) {
-                worker.execute();
-                return point.proceed();
-            }
-        }
+		// 禁止重放验证
+		if (narutoSecurity.antiReplay()) {
+			// 请求路径
+			String targetUrl = StringUtils.replace(request.getRequestURI(), servletContextPath, "");
 
-        return point.proceed();
-    }
+			try (AntiReplayValidator.AntiReplayWorker worker = AntiReplayValidator.builder()
+					.methodName(SpringUtils.getMethodName(point))
+					.nonce(request.getHeader(props.getHeaderKey().getNonce()))
+					.url(request.getHeader(props.getHeaderKey().getUrl())).targetUrl(targetUrl)
+					.timestamp(ConvertUtils.StringToLong(request.getHeader(props.getHeaderKey().getTimestamp())))) {
+				worker.execute();
+				return point.proceed();
+			}
+		}
 
-    private HttpServletRequest getHttpServletRequest() {
-        return getServletRequestAttributes().getRequest();
-    }
+		return point.proceed();
+	}
 
-    private ServletRequestAttributes getServletRequestAttributes() {
-        return (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-    }
+	private HttpServletRequest getHttpServletRequest() {
+		return getServletRequestAttributes().getRequest();
+	}
+
+	private ServletRequestAttributes getServletRequestAttributes() {
+		return (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+	}
+
 }

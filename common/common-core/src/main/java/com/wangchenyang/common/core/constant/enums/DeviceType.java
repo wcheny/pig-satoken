@@ -11,10 +11,11 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum DeviceType {
 
-    /**
-     * pc端
-     */
-    PC("PC");
+	/**
+	 * pc端
+	 */
+	PC("PC");
 
-    private final String device;
+	private final String device;
+
 }

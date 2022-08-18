@@ -63,7 +63,7 @@ public class TokenController {
 			if (StpUtil.stpLogic.getTokenActivityTimeoutByToken(token) < 0) {
 				return null;
 			}
-			return (SysUserOnline)RedisUtils.getCacheObject(CacheConstants.ONLINE_TOKEN_KEY + token);
+			return (SysUserOnline) RedisUtils.getCacheObject(CacheConstants.ONLINE_TOKEN_KEY + token);
 		}).filter(Objects::nonNull).collect(Collectors.toList());
 		result.setRecords(collect);
 		result.setTotal(keys.size());
@@ -80,7 +80,8 @@ public class TokenController {
 	public R<Boolean> delete(@PathVariable String id) {
 		try {
 			StpUtil.kickoutByTokenValue(id);
-		} catch (NotLoginException e) {
+		}
+		catch (NotLoginException e) {
 		}
 		return R.ok(true);
 	}

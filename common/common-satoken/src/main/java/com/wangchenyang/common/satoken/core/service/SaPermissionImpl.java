@@ -13,19 +13,20 @@ import java.util.List;
  */
 public class SaPermissionImpl implements StpInterface {
 
-    /**
-     * 获取菜单权限列表
-     */
-    @Override
-    public List<String> getPermissionList(Object loginId, String loginType) {
+	/**
+	 * 获取菜单权限列表
+	 */
+	@Override
+	public List<String> getPermissionList(Object loginId, String loginType) {
 		return LoginHelper.getLoginUser().getMenuPermissions();
-    }
+	}
 
-    /**
-     * 获取角色权限列表
-     */
-    @Override
-    public List<String> getRoleList(Object loginId, String loginType) {
+	/**
+	 * 获取角色权限列表
+	 */
+	@Override
+	public List<String> getRoleList(Object loginId, String loginType) {
 		return LoginHelper.getLoginUser().getRoles();
-    }
+	}
+
 }

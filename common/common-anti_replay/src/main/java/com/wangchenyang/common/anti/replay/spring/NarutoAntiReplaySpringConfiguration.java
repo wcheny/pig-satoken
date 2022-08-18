@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Import;
  */
 @Configurable
 @EnableAspectJAutoProxy
-@Import({BeanFactory.class, AntiReplayAspect.class, ReplayProperties.class, CacheSupport.class})
+@Import({ BeanFactory.class, AntiReplayAspect.class, ReplayProperties.class, CacheSupport.class })
 public class NarutoAntiReplaySpringConfiguration {
+
 }

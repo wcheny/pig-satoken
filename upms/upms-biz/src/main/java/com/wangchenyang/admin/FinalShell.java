@@ -1,10 +1,12 @@
 package com.wangchenyang.admin;
+
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
 
 public class FinalShell {
+
 	public static void main(String[] args) throws NoSuchAlgorithmException, IOException {
 		System.out.print("请输入FinalShell的离线机器码：");
 		@SuppressWarnings("resource")

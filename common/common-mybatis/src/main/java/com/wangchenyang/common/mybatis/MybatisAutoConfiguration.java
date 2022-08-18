@@ -46,12 +46,11 @@ public class MybatisAutoConfiguration implements WebMvcConfigurer {
 	@Bean
 	public ConfigurationCustomizer configurationCustomizer() {
 		return configuration -> {
-			//注入参数入库加解密拦截器
+			// 注入参数入库加解密拦截器
 			configuration.addInterceptor(new EncryptFieldInterceptor());
 			configuration.addInterceptor(new DecryptFieldInterceptor());
 		};
 	}
-
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
@@ -76,7 +75,6 @@ public class MybatisAutoConfiguration implements WebMvcConfigurer {
 		interceptor.addInnerInterceptor(new YifanPaginationInnerInterceptor());
 		return interceptor;
 	}
-
 
 	/**
 	 * 审计字段自动填充

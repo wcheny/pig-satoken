@@ -17,13 +17,14 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Target(METHOD)
 public @interface NarutoAntiReplay {
 
-    /**
-     * 禁止重放
-     */
-    boolean antiReplay() default true;
+	/**
+	 * 禁止重放
+	 */
+	boolean antiReplay() default true;
 
-    /**
-     * 验签签名
-     */
-    boolean checkSignature() default true;
+	/**
+	 * 验签签名
+	 */
+	boolean checkSignature() default true;
+
 }

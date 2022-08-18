@@ -15,4 +15,5 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 @Import(NarutoAntiReplaySpringConfiguration.class)
 public @interface EnableNarutoAntiReplay {
+
 }

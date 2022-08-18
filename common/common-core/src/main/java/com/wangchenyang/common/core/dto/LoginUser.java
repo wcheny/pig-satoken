@@ -16,37 +16,38 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 public class LoginUser implements Serializable {
-    private static final long serialVersionUID = 1L;
 
-    /**
-     * 用户ID
-     */
-    private Long userId;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * 部门ID
-     */
-    private Long deptId;
+	/**
+	 * 用户ID
+	 */
+	private Long userId;
 
-    /**
-     * 用户类型
-     */
-    private String userType;
+	/**
+	 * 部门ID
+	 */
+	private Long deptId;
+
+	/**
+	 * 用户类型
+	 */
+	private String userType;
 
 	/**
 	 * 权限标识集合
 	 */
 	private List<String> menuPermissions;
 
-    /**
-     * 用户名
-     */
-    private String username;
+	/**
+	 * 用户名
+	 */
+	private String username;
 
-    /**
-     * 密码
-     */
-    private String password;
+	/**
+	 * 密码
+	 */
+	private String password;
 
 	/**
 	 * 角色集合 roleCode
@@ -68,11 +69,11 @@ public class LoginUser implements Serializable {
 	 */
 	private List postList;
 
-    /**
-     * 获取登录id
-     */
-    public String getLoginId() {
-        return userType + ":" + userId;
-    }
+	/**
+	 * 获取登录id
+	 */
+	public String getLoginId() {
+		return userType + ":" + userId;
+	}
 
 }

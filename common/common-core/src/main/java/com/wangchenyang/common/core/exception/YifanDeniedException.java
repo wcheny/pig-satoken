@@ -39,7 +39,8 @@ public class YifanDeniedException extends RuntimeException {
 		super(message, cause);
 	}
 
-	public YifanDeniedException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+	public YifanDeniedException(String message, Throwable cause, boolean enableSuppression,
+			boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
 	}
 

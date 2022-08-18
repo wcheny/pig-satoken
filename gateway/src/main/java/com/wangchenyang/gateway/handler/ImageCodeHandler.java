@@ -61,7 +61,8 @@ public class ImageCodeHandler implements HandlerFunction<ServerResponse> {
 
 		// 保存验证码信息
 		Optional<String> randomStr = serverRequest.queryParam("randomStr");
-		randomStr.ifPresent(s -> RedisUtils.setCacheObject(CacheConstants.DEFAULT_CODE_KEY + s,result, Duration.ofSeconds(SecurityConstants.CODE_TIME)));
+		randomStr.ifPresent(s -> RedisUtils.setCacheObject(CacheConstants.DEFAULT_CODE_KEY + s, result,
+				Duration.ofSeconds(SecurityConstants.CODE_TIME)));
 
 		// 转换流信息写出
 		FastByteArrayOutputStream os = new FastByteArrayOutputStream();

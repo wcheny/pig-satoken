@@ -32,7 +32,6 @@ public interface CommonConstants {
 	 */
 	Long MENU_TREE_ROOT_ID = -1L;
 
-
 	/**
 	 * 编码
 	 */

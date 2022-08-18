@@ -1,6 +1,5 @@
 package com.wangchenyang.common.redis.config;
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wangchenyang.common.redis.config.properties.RedisConfigProperties;
 import lombok.extern.slf4j.Slf4j;
@@ -35,20 +34,19 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 @AutoConfigureBefore(RedisAutoConfiguration.class)
 public class RedisConfiguration {
 
-
 	@Autowired
 	private RedisConfigProperties redisConfigProperties;
+
 	@Autowired
 	private ObjectMapper objectMapper;
 
-	//添加redisson的bean
+	// 添加redisson的bean
 	@Bean
 	public RedissonClient redisson() {
-		String redissonAddr = "redis://" + redisConfigProperties.getHost()+":"+redisConfigProperties.getPort();
+		String redissonAddr = "redis://" + redisConfigProperties.getHost() + ":" + redisConfigProperties.getPort();
 		Config config = new Config();
 		config.setCodec(new JsonJacksonCodec(objectMapper));
-		config.useSingleServer().setAddress(redissonAddr)
-				.setPassword(redisConfigProperties.getPassword());
+		config.useSingleServer().setAddress(redissonAddr).setPassword(redisConfigProperties.getPassword());
 		return Redisson.create(config);
 	}
 
@@ -63,13 +61,14 @@ public class RedisConfiguration {
 		return redisTemplate;
 	}
 
-
 	@Bean
 	public RedisCacheManager redisCacheManager(RedisTemplate redisTemplate) {
-		RedisCacheWriter redisCacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(redisTemplate.getConnectionFactory());
+		RedisCacheWriter redisCacheWriter = RedisCacheWriter
+				.nonLockingRedisCacheWriter(redisTemplate.getConnectionFactory());
 		RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
-				.computePrefixWith(name -> name + ":")
-				.serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(redisTemplate.getValueSerializer()));
+				.computePrefixWith(name -> name + ":").serializeValuesWith(
+						RedisSerializationContext.SerializationPair.fromSerializer(redisTemplate.getValueSerializer()));
 		return new RedisCacheManager(redisCacheWriter, redisCacheConfiguration);
 	}
+
 }

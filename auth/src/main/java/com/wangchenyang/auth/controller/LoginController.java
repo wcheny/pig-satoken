@@ -24,13 +24,14 @@ public class LoginController {
 	@Autowired
 	private LoginService loginService;
 
-    /**
-     * 后台登陆
-     */
-    @PostMapping("/login")
-    public R login(@Validated LoginBody loginBody) {
-        return loginService.login(loginBody);
-    }
+	/**
+	 * 后台登陆
+	 */
+	@PostMapping("/login")
+	public R login(@Validated LoginBody loginBody) {
+		return loginService.login(loginBody);
+	}
+
 	/**
 	 * 手机号登陆
 	 *
@@ -38,7 +39,7 @@ public class LoginController {
 	 * @version 1.0
 	 * @date 2022/8/18 22:19
 	 * @desc
-	**/
+	 **/
 	@PostMapping("/smsLogin")
 	public R smsLogin(String mobile) {
 		return loginService.smsLogin(mobile);
@@ -49,17 +50,19 @@ public class LoginController {
 	 */
 	@DeleteMapping("logout")
 	public R<Void> logout() {
-		try{
+		try {
 			String username = LoginHelper.getUsername();
 			StpUtil.logout();
 			SysLog logVo = SysLogUtils.getSysLog();
-			logVo.setTitle(username+"退出登陆");
+			logVo.setTitle(username + "退出登陆");
 			// 发送异步日志事件
 			logVo.setTime(0L);
 			logVo.setCreateBy(username);
 			logVo.setUpdateBy(username);
 			SpringContextHolder.publishEvent(new SysLogEvent(logVo));
-		}catch (Exception e){}
+		}
+		catch (Exception e) {
+		}
 		return R.ok();
 	}
 

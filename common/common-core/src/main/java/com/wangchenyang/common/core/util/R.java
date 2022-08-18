@@ -85,7 +85,7 @@ public class R<T> implements Serializable {
 	}
 
 	public static <T> R<T> restResult(int code, String msg) {
-		return restResult(null,code,msg);
+		return restResult(null, code, msg);
 	}
 
 }

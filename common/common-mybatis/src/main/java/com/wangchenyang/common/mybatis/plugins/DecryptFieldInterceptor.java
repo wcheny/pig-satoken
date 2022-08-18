@@ -11,6 +11,7 @@ import org.springframework.core.annotation.AnnotationUtils;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Objects;
+
 /**
  * 字段解密
  *
@@ -18,30 +19,30 @@ import java.util.Objects;
  * @version 1.0
  * @date 2022/8/18 19:45
  * @desc
-**/
-@Intercepts({
-		@Signature(type = ResultSetHandler.class, method = "handleResultSets", args = {Statement.class})
-})
+ **/
+@Intercepts({ @Signature(type = ResultSetHandler.class, method = "handleResultSets", args = { Statement.class }) })
 @Slf4j
 public class DecryptFieldInterceptor implements Interceptor {
+
 	@Override
 	public Object intercept(Invocation invocation) throws Throwable {
-		//取出查询的结果
+		// 取出查询的结果
 		Object resultObject = invocation.proceed();
 		if (Objects.isNull(resultObject)) {
 			return null;
 		}
-		//基于selectList
+		// 基于selectList
 		if (resultObject instanceof ArrayList) {
 			ArrayList resultList = (ArrayList) resultObject;
 			if (!CollectionUtils.isEmpty(resultList) && needToDecrypt(resultList.get(0))) {
 				for (Object result : resultList) {
-					//逐一解密
+					// 逐一解密
 					EncryptDecrypt.decrypt(result);
 				}
 			}
-			//基于selectOne
-		} else {
+			// 基于selectOne
+		}
+		else {
 			if (needToDecrypt(resultObject)) {
 				EncryptDecrypt.decrypt(resultObject);
 			}
@@ -55,9 +56,9 @@ public class DecryptFieldInterceptor implements Interceptor {
 		return Objects.nonNull(sensitiveData);
 	}
 
-
 	@Override
 	public Object plugin(Object target) {
 		return Plugin.wrap(target, this);
 	}
+
 }

@@ -11,18 +11,16 @@ import org.springframework.http.HttpStatus;
 
 import java.util.Map;
 
-
 @RequiredArgsConstructor
 public class JmReportTokenServiceImpl implements JmReportTokenServiceI {
 
-    /**
-     * 校验 Token 是否有效，即验证通过
-     *
-     * @param token JmReport 前端传递的 token
-     * @return 是否认证通过
-     */
-    @Override
-    public Boolean verifyToken(String token) {
+	/**
+	 * 校验 Token 是否有效，即验证通过
+	 * @param token JmReport 前端传递的 token
+	 * @return 是否认证通过
+	 */
+	@Override
+	public Boolean verifyToken(String token) {
 		if (StrUtil.isBlank(token)) {
 			return false;
 		}
@@ -31,10 +29,11 @@ public class JmReportTokenServiceImpl implements JmReportTokenServiceI {
 			return false;
 		}
 		return true;
-    }
+	}
 
 	@Override
 	public String getUsername(String token) {
 		return LoginHelper.getUsername(token);
 	}
+
 }
