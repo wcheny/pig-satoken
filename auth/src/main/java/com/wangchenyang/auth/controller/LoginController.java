@@ -31,6 +31,18 @@ public class LoginController {
     public R login(@Validated LoginBody loginBody) {
         return loginService.login(loginBody);
     }
+	/**
+	 * 手机号登陆
+	 *
+	 * @author 王晨阳
+	 * @version 1.0
+	 * @date 2022/8/18 22:19
+	 * @desc
+	**/
+	@PostMapping("/smsLogin")
+	public R smsLogin(String mobile) {
+		return loginService.smsLogin(mobile);
+	}
 
 	/**
 	 * 登出方法

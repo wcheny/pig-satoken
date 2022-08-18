@@ -29,4 +29,11 @@ public class LoginService {
 		return R.ok(StpUtil.getTokenValue());
 	}
 
+	public R<String> smsLogin(String mobile) {
+		R<LoginUser> result = remoteUserService.infoByMobile(mobile);
+		LoginUser userInfo = RetOps.of(result).getData().orElseThrow(() -> new RuntimeException(result.getMsg()));
+		// 获取登录token
+		LoginHelper.loginByDevice(userInfo, DeviceType.PC);
+		return R.ok(StpUtil.getTokenValue());
+	}
 }

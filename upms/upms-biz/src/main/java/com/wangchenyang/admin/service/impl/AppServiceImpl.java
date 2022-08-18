@@ -28,14 +28,14 @@ import com.wangchenyang.common.core.constant.SecurityConstants;
 import com.wangchenyang.common.core.exception.ErrorCodes;
 import com.wangchenyang.common.core.util.MsgUtils;
 import com.wangchenyang.common.core.util.R;
+import com.wangchenyang.common.redis.utils.RedisUtils;
 import io.springboot.sms.core.SmsClient;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author lengleng
@@ -47,8 +47,6 @@ import java.util.concurrent.TimeUnit;
 @Service
 @AllArgsConstructor
 public class AppServiceImpl implements AppService {
-
-	private final RedisTemplate redisTemplate;
 
 	private final SysUserMapper userMapper;
 
@@ -67,8 +65,7 @@ public class AppServiceImpl implements AppService {
 			log.info("手机号未注册:{}", phone);
 			return R.ok(Boolean.FALSE, MsgUtils.getMessage(ErrorCodes.SYS_APP_PHONE_UNREGISTERED, phone));
 		}
-
-		Object codeObj = redisTemplate.opsForValue().get(CacheConstants.DEFAULT_CODE_KEY + phone);
+		Object codeObj = RedisUtils.getCacheObject(CacheConstants.DEFAULT_CODE_KEY + phone);
 
 		if (codeObj != null) {
 			log.info("手机号验证码未过期:{}，{}", phone, codeObj);
@@ -77,8 +74,7 @@ public class AppServiceImpl implements AppService {
 
 		String code = RandomUtil.randomNumbers(Integer.parseInt(SecurityConstants.CODE_SIZE));
 		log.info("手机号生成验证码成功:{},{}", phone, code);
-		redisTemplate.opsForValue().set(CacheConstants.DEFAULT_CODE_KEY + phone, code, SecurityConstants.CODE_TIME,
-				TimeUnit.SECONDS);
+		RedisUtils.setCacheObject(CacheConstants.DEFAULT_CODE_KEY + phone, code, Duration.ofSeconds(SecurityConstants.CODE_TIME));
 
 		// 调用短信通道发送
 		this.smsClient.sendCode(code, phone);

@@ -67,7 +67,9 @@ public class ValidateCodeGatewayFilter extends AbstractGatewayFilterFactory<Obje
 		}
 
 		String randomStr = request.getQueryParams().getFirst("randomStr");
-
+		if (CharSequenceUtil.isBlank(randomStr)) {
+			randomStr = request.getQueryParams().getFirst("mobile");
+		}
 		String key = CacheConstants.DEFAULT_CODE_KEY + randomStr;
 		String codeObj = RedisUtils.getCacheObject(key);
 		RedisUtils.deleteObject(key);
