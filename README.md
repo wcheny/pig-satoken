@@ -3,6 +3,8 @@
 - 基于 Pig开源版 开发，移除oauth2改为SaToken，删除oauth2相关代码
 - 集成积木报表
 
+[配套文档](https://www.yuque.com/wchenyang/ah2b1g/fntnc1) 
+
 ## 快速开始
 
 ### 核心依赖

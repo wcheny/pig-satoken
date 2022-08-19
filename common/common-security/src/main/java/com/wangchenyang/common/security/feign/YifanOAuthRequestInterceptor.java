@@ -18,14 +18,6 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class YifanOAuthRequestInterceptor implements RequestInterceptor {
 
-	/**
-	 * Create a template with the header of provided name and extracted extract </br>
-	 *
-	 * 1. 如果使用 非web 请求，header 区别 </br>
-	 *
-	 * 2. 根据authentication 还原请求token
-	 * @param template
-	 */
 	@Override
 	public void apply(RequestTemplate template) {
 		template.header(SaIdUtil.ID_TOKEN, SaIdUtil.getToken());

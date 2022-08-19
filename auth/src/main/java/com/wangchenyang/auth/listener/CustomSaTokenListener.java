@@ -30,10 +30,7 @@ import java.util.Date;
  */
 @Component
 @Slf4j
-@RequiredArgsConstructor
 public class CustomSaTokenListener implements SaTokenListener {
-
-	private final SaTokenConfig tokenConfig;
 
 	/**
 	 * 每次登录时触发
@@ -48,11 +45,12 @@ public class CustomSaTokenListener implements SaTokenListener {
 		logVo.setCreateBy(username);
 		logVo.setUpdateBy(username);
 		SpringContextHolder.publishEvent(new SysLogEvent(logVo));
+		//保存在线用户
 		SysUserOnline userOnline = buildUser();
 		userOnline.setTokenId(tokenValue);
 		userOnline.setTokenTimeout(loginModel.getTimeout());
 		RedisUtils.setCacheObject(CacheConstants.ONLINE_TOKEN_KEY + tokenValue, userOnline,
-				Duration.ofSeconds(tokenConfig.getTimeout()));
+				Duration.ofSeconds(loginModel.getTimeout()));
 	}
 
 	public SysUserOnline buildUser() {
