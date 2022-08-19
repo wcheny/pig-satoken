@@ -55,4 +55,4 @@ cloud-satoken
 4.启动gateway,upms,auth测试
 
 ### 接口防重放、防篡改
-使用方法详见：[https://www.yuque.com/pig4cloud/pig/qgriht]()
+使用方法详见：[https://www.yuque.com/pig4cloud/pig/qgriht](https://www.yuque.com/pig4cloud/pig/qgriht)

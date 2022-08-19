@@ -19,11 +19,8 @@ package com.wangchenyang.common.feign.sentinel.handle;
 import com.alibaba.csp.sentinel.Tracer;
 import com.wangchenyang.common.core.util.R;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.core.SpringSecurityMessageSource;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
@@ -45,7 +42,6 @@ import java.util.List;
 @Slf4j
 @Order(10000)
 @RestControllerAdvice
-@ConditionalOnExpression("!'${security.oauth2.client.clientId}'.isEmpty()")
 public class GlobalBizExceptionHandler {
 
 	/**
@@ -78,20 +74,6 @@ public class GlobalBizExceptionHandler {
 	public R handleIllegalArgumentException(IllegalArgumentException exception) {
 		log.error("非法参数,ex = {}", exception.getMessage(), exception);
 		return R.failed(exception.getMessage());
-	}
-
-	/**
-	 * AccessDeniedException
-	 * @param e the e
-	 * @return R
-	 */
-	@ExceptionHandler(AccessDeniedException.class)
-	@ResponseStatus(HttpStatus.FORBIDDEN)
-	public R handleAccessDeniedException(AccessDeniedException e) {
-		String msg = SpringSecurityMessageSource.getAccessor().getMessage("AbstractAccessDecisionManager.accessDenied",
-				e.getMessage());
-		log.warn("拒绝授权异常信息 ex={}", msg);
-		return R.failed(e.getLocalizedMessage());
 	}
 
 	/**

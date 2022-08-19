@@ -16,6 +16,7 @@
 
 package com.wangchenyang.admin.controller;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.map.MapUtil;
@@ -28,7 +29,6 @@ import com.wangchenyang.common.core.util.R;
 import com.wangchenyang.common.redis.utils.RedisUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -76,7 +76,7 @@ public class TokenController {
 	 * @return success/false
 	 */
 	@DeleteMapping("/{id}")
-	@PreAuthorize("@pms.hasPermission('sys_token_del')")
+	@SaCheckPermission("sys_token_del")
 	public R<Boolean> delete(@PathVariable String id) {
 		try {
 			StpUtil.kickoutByTokenValue(id);

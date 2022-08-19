@@ -1,19 +1,10 @@
 package com.wangchenyang.common.security.feign;
 
 import cn.dev33.satoken.id.SaIdUtil;
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.StrUtil;
-import com.wangchenyang.common.core.constant.SecurityConstants;
-import com.wangchenyang.common.core.util.WebUtils;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpHeaders;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.Collection;
-import java.util.Enumeration;
 
 /**
  * oauth2 feign token传递

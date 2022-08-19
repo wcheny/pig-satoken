@@ -54,7 +54,7 @@ public class ApiLoggingFilter implements GlobalFilter, Ordered {
 			return chain.filter(exchange);
 		}
 		ServerHttpRequest request = exchange.getRequest();
-		String url = request.getMethod().name() + " " + getOriginalRequestUrl(exchange);
+		String url = request.getMethod().name() + " " + request.getURI().getPath();
 		log.debug("开始请求 => URL:[{}],参数:[{}]", url, request.getQueryParams());
 		exchange.getAttributes().put(START_TIME, System.currentTimeMillis());
 		return chain.filter(exchange).then(Mono.fromRunnable(() -> {
@@ -76,13 +76,6 @@ public class ApiLoggingFilter implements GlobalFilter, Ordered {
 	@Override
 	public int getOrder() {
 		return Ordered.LOWEST_PRECEDENCE;
-	}
-
-	public static String getOriginalRequestUrl(ServerWebExchange exchange) {
-		ServerHttpRequest request = exchange.getRequest();
-		LinkedHashSet<URI> uris = exchange.getRequiredAttribute(GATEWAY_ORIGINAL_REQUEST_URL_ATTR);
-		URI requestUri = uris.stream().findFirst().orElse(request.getURI());
-		return UriComponentsBuilder.fromPath(requestUri.getRawPath()).build().toUriString();
 	}
 
 }

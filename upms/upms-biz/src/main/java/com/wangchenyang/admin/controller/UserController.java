@@ -16,6 +16,7 @@
 
 package com.wangchenyang.admin.controller;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -37,8 +38,6 @@ import com.wangchenyang.common.satoken.utils.LoginHelper;
 import com.pig4cloud.plugin.excel.annotation.RequestExcel;
 import com.pig4cloud.plugin.excel.annotation.ResponseExcel;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -130,7 +129,7 @@ public class UserController {
 	 */
 	@SysLog("删除用户信息")
 	@DeleteMapping("/{id:\\d+}")
-	@PreAuthorize("@pms.hasPermission('sys_user_del')")
+	@SaCheckPermission("sys_user_del")
 	public R<Boolean> userDel(@PathVariable Long id) {
 		SysUser sysUser = userService.getById(id);
 		return R.ok(userService.removeUserById(sysUser));
@@ -143,7 +142,7 @@ public class UserController {
 	 */
 	@SysLog("添加用户")
 	@PostMapping
-	@PreAuthorize("@pms.hasPermission('sys_user_add')")
+	@SaCheckPermission("sys_user_add")
 	public R<Boolean> user(@RequestBody UserDTO userDto) {
 		return R.ok(userService.saveUser(userDto));
 	}
@@ -155,7 +154,7 @@ public class UserController {
 	 */
 	@SysLog("更新用户信息")
 	@PutMapping
-	@PreAuthorize("@pms.hasPermission('sys_user_edit')")
+	@SaCheckPermission("sys_user_edit")
 	public R<Boolean> updateUser(@Valid @RequestBody UserDTO userDto) {
 		return R.ok(userService.updateUser(userDto));
 	}
@@ -199,7 +198,7 @@ public class UserController {
 	 */
 	@ResponseExcel
 	@GetMapping("/export")
-	@PreAuthorize("@pms.hasPermission('sys_user_import_export')")
+	@SaCheckPermission("sys_user_import_export")
 	public List<UserExcelVO> export(UserDTO userDTO) {
 		return userService.listUser(userDTO);
 	}
@@ -211,7 +210,7 @@ public class UserController {
 	 * @return R
 	 */
 	@PostMapping("/import")
-	@PreAuthorize("@pms.hasPermission('sys_user_import_export')")
+	@SaCheckPermission("sys_user_import_export")
 	public R importUser(@RequestExcel List<UserExcelVO> excelVOList, BindingResult bindingResult) {
 		return userService.importUser(excelVOList, bindingResult);
 	}
