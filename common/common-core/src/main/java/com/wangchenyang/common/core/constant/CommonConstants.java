@@ -67,4 +67,9 @@ public interface CommonConstants {
 	 */
 	String SIZE = "size";
 
+	/**
+	 * 请求开始时间
+	 */
+	String REQUEST_START_TIME = "REQUEST_START_TIME";
+
 }

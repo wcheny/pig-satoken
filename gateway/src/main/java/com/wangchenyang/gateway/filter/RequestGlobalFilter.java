@@ -17,6 +17,7 @@
 package com.wangchenyang.gateway.filter;
 
 import cn.dev33.satoken.id.SaIdUtil;
+import com.wangchenyang.common.core.constant.CommonConstants;
 import com.wangchenyang.common.core.constant.SecurityConstants;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -57,7 +58,10 @@ public class RequestGlobalFilter implements GlobalFilter, Ordered {
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 		// 1. 添加ID_TOKEN
 		ServerHttpRequest request = exchange.getRequest().mutate()
-				.header(SaIdUtil.ID_TOKEN, SaIdUtil.getToken()).build();
+				.header(SaIdUtil.ID_TOKEN, SaIdUtil.getToken())
+				//设置请求时间
+				.header(CommonConstants.REQUEST_START_TIME, String.valueOf(System.currentTimeMillis()))
+				.build();
 
 		// 2. 重写StripPrefix
 		addOriginalRequestUrl(exchange, request.getURI());

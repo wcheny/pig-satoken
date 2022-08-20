@@ -3,11 +3,13 @@ package com.wangchenyang.auth.listener;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.listener.SaTokenListener;
 import cn.dev33.satoken.stp.SaLoginModel;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.servlet.ServletUtil;
 import cn.hutool.http.useragent.UserAgent;
 import cn.hutool.http.useragent.UserAgentUtil;
 import com.wangchenyang.admin.api.entity.SysLog;
 import com.wangchenyang.common.core.constant.CacheConstants;
+import com.wangchenyang.common.core.constant.CommonConstants;
 import com.wangchenyang.common.core.dto.LoginUser;
 import com.wangchenyang.common.core.dto.SysUserOnline;
 import com.wangchenyang.common.core.util.SpringContextHolder;
@@ -41,9 +43,17 @@ public class CustomSaTokenListener implements SaTokenListener {
 		SysLog logVo = SysLogUtils.getSysLog();
 		logVo.setTitle(username + "登录成功");
 		// 发送异步日志事件
-		logVo.setTime(0L);
 		logVo.setCreateBy(username);
 		logVo.setUpdateBy(username);
+		if (WebUtils.getRequest().isPresent()) {
+			//获取请求时间和当前时间 计算耗时
+			String startTimeStr = WebUtils.getRequest().get().getHeader(CommonConstants.REQUEST_START_TIME);
+			if (StrUtil.isNotBlank(startTimeStr)) {
+				Long startTime = Long.parseLong(startTimeStr);
+				Long endTime = System.currentTimeMillis();
+				logVo.setTime(endTime - startTime);
+			}
+		}
 		SpringContextHolder.publishEvent(new SysLogEvent(logVo));
 		//保存在线用户
 		SysUserOnline userOnline = buildUser();
