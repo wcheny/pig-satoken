@@ -1,6 +1,5 @@
 package com.wangchenyang.auth.listener;
 
-import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.listener.SaTokenListener;
 import cn.dev33.satoken.stp.SaLoginModel;
 import cn.hutool.core.util.StrUtil;
@@ -18,7 +17,6 @@ import com.wangchenyang.common.log.event.SysLogEvent;
 import com.wangchenyang.common.log.util.SysLogUtils;
 import com.wangchenyang.common.redis.utils.RedisUtils;
 import com.wangchenyang.common.satoken.utils.LoginHelper;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -46,7 +44,7 @@ public class CustomSaTokenListener implements SaTokenListener {
 		logVo.setCreateBy(username);
 		logVo.setUpdateBy(username);
 		if (WebUtils.getRequest().isPresent()) {
-			//获取请求时间和当前时间 计算耗时
+			// 获取请求时间和当前时间 计算耗时
 			String startTimeStr = WebUtils.getRequest().get().getHeader(CommonConstants.REQUEST_START_TIME);
 			if (StrUtil.isNotBlank(startTimeStr)) {
 				Long startTime = Long.parseLong(startTimeStr);
@@ -55,7 +53,7 @@ public class CustomSaTokenListener implements SaTokenListener {
 			}
 		}
 		SpringContextHolder.publishEvent(new SysLogEvent(logVo));
-		//保存在线用户
+		// 保存在线用户
 		SysUserOnline userOnline = buildUser();
 		userOnline.setTokenId(tokenValue);
 		userOnline.setTokenTimeout(loginModel.getTimeout());

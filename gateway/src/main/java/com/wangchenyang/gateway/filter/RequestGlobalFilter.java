@@ -57,11 +57,9 @@ public class RequestGlobalFilter implements GlobalFilter, Ordered {
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 		// 1. 添加ID_TOKEN
-		ServerHttpRequest request = exchange.getRequest().mutate()
-				.header(SaIdUtil.ID_TOKEN, SaIdUtil.getToken())
-				//设置请求时间
-				.header(CommonConstants.REQUEST_START_TIME, String.valueOf(System.currentTimeMillis()))
-				.build();
+		ServerHttpRequest request = exchange.getRequest().mutate().header(SaIdUtil.ID_TOKEN, SaIdUtil.getToken())
+				// 设置请求时间
+				.header(CommonConstants.REQUEST_START_TIME, String.valueOf(System.currentTimeMillis())).build();
 
 		// 2. 重写StripPrefix
 		addOriginalRequestUrl(exchange, request.getURI());
