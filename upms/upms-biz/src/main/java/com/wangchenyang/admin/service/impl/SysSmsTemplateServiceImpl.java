@@ -39,7 +39,8 @@ import java.util.regex.Pattern;
  */
 @Service
 @RequiredArgsConstructor
-public class SysSmsTemplateServiceImpl extends ServiceImpl<SysSmsTemplateMapper, SysSmsTemplate> implements SysSmsTemplateService {
+public class SysSmsTemplateServiceImpl extends ServiceImpl<SysSmsTemplateMapper, SysSmsTemplate>
+		implements SysSmsTemplateService {
 
 	private final SysSmsChannelService smsChannelService;
 
@@ -50,8 +51,8 @@ public class SysSmsTemplateServiceImpl extends ServiceImpl<SysSmsTemplateMapper,
 	 */
 	private static final Pattern PATTERN_PARAMS = Pattern.compile("\\{(.*?)}");
 
-    @Override
-    public void createSmsTemplate(SysSmsTemplate sysSmsTemplate) {
+	@Override
+	public void createSmsTemplate(SysSmsTemplate sysSmsTemplate) {
 		SysSmsChannel channel = checkSmsChannel(sysSmsTemplate.getChannelId());
 		checkSmsTemplateCodeDuplicate(null, sysSmsTemplate.getCode());
 		checkApiTemplate(sysSmsTemplate.getChannelId(), sysSmsTemplate.getApiTemplateId());
@@ -74,19 +75,18 @@ public class SysSmsTemplateServiceImpl extends ServiceImpl<SysSmsTemplateMapper,
 		baseMapper.updateById(sysSmsTemplate);
 	}
 
-    @Override
-    public String formatSmsTemplateContent(String content, Map<String, Object> params) {
+	@Override
+	public String formatSmsTemplateContent(String content, Map<String, Object> params) {
 		return StrUtil.format(content, params);
-    }
+	}
 
 	@Override
 	public SysSmsTemplate selectByCode(String code) {
-		return lambdaQuery().eq(SysSmsTemplate::getCode,code).one();
+		return lambdaQuery().eq(SysSmsTemplate::getCode, code).one();
 	}
 
 	/**
 	 * 校验 API 短信平台的模板是否有效
-	 *
 	 * @param channelId 渠道编号
 	 * @param apiTemplateId API 模板编号
 	 */
@@ -95,25 +95,25 @@ public class SysSmsTemplateServiceImpl extends ServiceImpl<SysSmsTemplateMapper,
 		SmsClient smsClient = smsClientFactory.getSmsClient(channelId);
 		Assert.notNull(smsClient, String.format("短信客户端(%d) 不存在", channelId));
 		SmsCommonResult<SmsTemplateRespDTO> templateResult = smsClient.getSmsTemplate(apiTemplateId);
-		if(R.ok().getCode()!=templateResult.getCode()){
+		if (R.ok().getCode() != templateResult.getCode()) {
 			throw new RuntimeException(templateResult.getMsg());
 		}
 	}
 
 	public void checkSmsTemplateCodeDuplicate(Long id, String code) {
-		SysSmsTemplate template = baseMapper.selectOne(Wrappers.lambdaQuery(SysSmsTemplate.class).eq(SysSmsTemplate::getCode,code));
+		SysSmsTemplate template = baseMapper
+				.selectOne(Wrappers.lambdaQuery(SysSmsTemplate.class).eq(SysSmsTemplate::getCode, code));
 		if (template == null) {
 			return;
 		}
 		// 如果 id 为空，说明不用比较是否为相同 id 的字典类型
 		if (id == null) {
-			throw new RuntimeException("已经存在编码为【"+code+"】的短信模板");
+			throw new RuntimeException("已经存在编码为【" + code + "】的短信模板");
 		}
 		if (!template.getId().equals(id)) {
-			throw new RuntimeException("已经存在编码为【"+code+"】的短信模板");
+			throw new RuntimeException("已经存在编码为【" + code + "】的短信模板");
 		}
 	}
-
 
 	public SysSmsChannel checkSmsChannel(Long channelId) {
 		SysSmsChannel channel = smsChannelService.getById(channelId);
@@ -125,4 +125,5 @@ public class SysSmsTemplateServiceImpl extends ServiceImpl<SysSmsTemplateMapper,
 		}
 		return channel;
 	}
+
 }

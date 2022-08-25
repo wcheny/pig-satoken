@@ -22,57 +22,56 @@ import javax.validation.constraints.NotNull;
 @EqualsAndHashCode(callSuper = true)
 public class SysSmsChannel extends BaseEntity {
 
-    /**
-     * 编号
-     */
-    @TableId(type = IdType.AUTO)
-    private Long id;
+	/**
+	 * 编号
+	 */
+	@TableId(type = IdType.AUTO)
+	private Long id;
 
-    /**
-     * 短信签名
-     */
+	/**
+	 * 短信签名
+	 */
 	@NotNull(message = "短信签名不能为空")
-    private String signature;
+	private String signature;
 
-    /**
-     * 渠道编码
-     */
+	/**
+	 * 渠道编码
+	 */
 	@NotNull(message = "渠道编码不能为空")
-    private String code;
+	private String code;
 
-    /**
-     * 开启状态
-     */
-    private Integer status;
+	/**
+	 * 开启状态
+	 */
+	private Integer status;
 
-    /**
-     * 备注
-     */
-    private String remark;
+	/**
+	 * 备注
+	 */
+	private String remark;
 
-    /**
-     * 短信 API 的账号
-     */
+	/**
+	 * 短信 API 的账号
+	 */
 	@NotNull(message = "短信 API 的账号不能为空")
-    private String apiKey;
+	private String apiKey;
 
-    /**
-     * 短信 API 的秘钥
-     */
+	/**
+	 * 短信 API 的秘钥
+	 */
 	@NotNull(message = "短信 API 的秘钥不能为空")
-    private String apiSecret;
+	private String apiSecret;
 
-    /**
-     * 短信发送回调 URL
-     */
+	/**
+	 * 短信发送回调 URL
+	 */
 	@URL(message = "回调 URL 格式不正确")
-    private String callbackUrl;
+	private String callbackUrl;
 
-    /**
-     * 0-正常，1-删除
-     */
+	/**
+	 * 0-正常，1-删除
+	 */
 	@TableLogic
 	private String delFlag;
-
 
 }

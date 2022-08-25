@@ -11,9 +11,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SmsAutoConfiguration {
 
-    @Bean
-    public SmsClientFactory smsClientFactory() {
-        return new SmsClientFactoryImpl();
-    }
+	@Bean
+	public SmsClientFactory smsClientFactory() {
+		return new SmsClientFactoryImpl();
+	}
 
 }

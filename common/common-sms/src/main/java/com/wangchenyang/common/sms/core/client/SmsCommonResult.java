@@ -22,40 +22,42 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class SmsCommonResult<T> extends R<T> {
 
-    /**
-     * API 返回错误码
-     *
-     * 由于第三方的错误码可能是字符串，所以使用 String 类型
-     */
-    private String apiCode;
-    /**
-     * API 返回提示
-     */
-    private String apiMsg;
+	/**
+	 * API 返回错误码
+	 *
+	 * 由于第三方的错误码可能是字符串，所以使用 String 类型
+	 */
+	private String apiCode;
 
-    /**
-     * API 请求编号
-     */
-    private String apiRequestId;
+	/**
+	 * API 返回提示
+	 */
+	private String apiMsg;
 
-    private SmsCommonResult() {
-    }
+	/**
+	 * API 请求编号
+	 */
+	private String apiRequestId;
 
-    public static <T> SmsCommonResult<T> build(String apiCode, String apiMsg, String apiRequestId,
-                                               T data,SmsCodeMapping codeMapping) {
+	private SmsCommonResult() {
+	}
+
+	public static <T> SmsCommonResult<T> build(String apiCode, String apiMsg, String apiRequestId, T data,
+			SmsCodeMapping codeMapping) {
 		Assert.notNull(codeMapping, "参数 codeMapping 不能为空");
-		SmsCommonResult<T> result = new SmsCommonResult<T>().setApiCode(apiCode).setApiMsg(apiMsg).setApiRequestId(apiRequestId);
+		SmsCommonResult<T> result = new SmsCommonResult<T>().setApiCode(apiCode).setApiMsg(apiMsg)
+				.setApiRequestId(apiRequestId);
 		result.setCode(codeMapping.apply(apiCode));
-		result.setMsg("短信发送失败");
+		result.setMsg(apiMsg);
 		result.setData(data);
-        return result;
-    }
+		return result;
+	}
 
-    public static <T> SmsCommonResult<T> error(Throwable ex) {
-        SmsCommonResult<T> result = new SmsCommonResult<>();
-        result.setCode(R.failed().getCode());
-        result.setMsg(ExceptionUtil.getRootCauseMessage(ex));
-        return result;
-    }
+	public static <T> SmsCommonResult<T> error(Throwable ex) {
+		SmsCommonResult<T> result = new SmsCommonResult<>();
+		result.setCode(R.failed().getCode());
+		result.setMsg(ExceptionUtil.getRootCauseMessage(ex));
+		return result;
+	}
 
 }

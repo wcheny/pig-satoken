@@ -109,8 +109,6 @@ public class GlobalBizExceptionHandler {
 		return R.failed(e.getLocalizedMessage());
 	}
 
-
-
 	/**
 	 * 处理业务校验过程中碰到的非法参数异常 该异常基本由{@link org.springframework.util.Assert}抛出
 	 * @see Assert#hasLength(String, String)
@@ -153,6 +151,5 @@ public class GlobalBizExceptionHandler {
 		log.warn("参数绑定异常,ex = {}", fieldErrors.get(0).getDefaultMessage());
 		return R.failed(fieldErrors.get(0).getDefaultMessage());
 	}
-
 
 }

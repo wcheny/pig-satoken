@@ -13,7 +13,6 @@ import com.wangchenyang.common.log.annotation.SysLog;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-
 /**
  * 短信日志
  *
@@ -22,37 +21,36 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/smslog" )
+@RequestMapping("/smslog")
 public class SysSmsLogController {
 
-    private final SysSmsLogService sysSmsLogService;
+	private final SysSmsLogService sysSmsLogService;
 
-    /**
-     * 分页查询
-     * @param page 分页对象
-     * @param sysSmsLog 短信日志
-     * @return
-     */
-    @GetMapping("/page" )
-    @SaCheckPermission("smslog_get" )
-    public R getSysSmsLogPage(Page page, SysSmsLog sysSmsLog) {
+	/**
+	 * 分页查询
+	 * @param page 分页对象
+	 * @param sysSmsLog 短信日志
+	 * @return
+	 */
+	@GetMapping("/page")
+	@SaCheckPermission("smslog_get")
+	public R getSysSmsLogPage(Page page, SysSmsLog sysSmsLog) {
 		LambdaQueryWrapper<SysSmsLog> wrapper = Wrappers.lambdaQuery();
-		wrapper.likeLeft(StringUtils.isNotEmpty(sysSmsLog.getMobile()),SysSmsLog::getMobile,sysSmsLog.getMobile())
-				.eq(sysSmsLog.getChannelId()!=null,SysSmsLog::getChannelId,sysSmsLog.getChannelId())
-				.eq(sysSmsLog.getTemplateId()!=null,SysSmsLog::getTemplateId,sysSmsLog.getTemplateId());
-        return R.ok(sysSmsLogService.page(page, wrapper));
-    }
+		wrapper.likeLeft(StringUtils.isNotEmpty(sysSmsLog.getMobile()), SysSmsLog::getMobile, sysSmsLog.getMobile())
+				.eq(sysSmsLog.getChannelId() != null, SysSmsLog::getChannelId, sysSmsLog.getChannelId())
+				.eq(sysSmsLog.getTemplateId() != null, SysSmsLog::getTemplateId, sysSmsLog.getTemplateId());
+		return R.ok(sysSmsLogService.page(page, wrapper));
+	}
 
-
-    /**
-     * 通过id查询短信日志
-     * @param id id
-     * @return R
-     */
-    @GetMapping("/{id}" )
-    @SaCheckPermission("smslog_get" )
-    public R getById(@PathVariable("id" ) Long id) {
-        return R.ok(sysSmsLogService.getById(id));
-    }
+	/**
+	 * 通过id查询短信日志
+	 * @param id id
+	 * @return R
+	 */
+	@GetMapping("/{id}")
+	@SaCheckPermission("smslog_get")
+	public R getById(@PathVariable("id") Long id) {
+		return R.ok(sysSmsLogService.getById(id));
+	}
 
 }

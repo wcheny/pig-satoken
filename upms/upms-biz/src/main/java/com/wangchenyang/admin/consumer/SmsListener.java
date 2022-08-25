@@ -20,12 +20,13 @@ import java.util.List;
  * @version 1.0
  * @date 2022/8/25 10:27
  * @desc
-**/
+ **/
 @Component
 @AllArgsConstructor
 public class SmsListener {
 
 	private final SmsClientFactory smsClientFactory;
+
 	private final SmsSendService smsSendService;
 
 	/**
@@ -35,13 +36,14 @@ public class SmsListener {
 	 * @version 1.0
 	 * @date 2022/8/25 10:28
 	 * @desc
-	**/
+	 **/
 	@EventListener
 	@Async
-	public void createOrUpdateSmsClientEvent(SmsChannelProperties smsChannelProperties){
-		if(StringUtils.isNotEmpty(smsChannelProperties.getApiKey())){
+	public void createOrUpdateSmsClientEvent(SmsChannelProperties smsChannelProperties) {
+		if (StringUtils.isNotEmpty(smsChannelProperties.getApiKey())) {
 			smsClientFactory.createOrUpdateSmsClient(smsChannelProperties);
-		}else{
+		}
+		else {
 			smsClientFactory.removeSmsClient(smsChannelProperties.getId());
 		}
 
@@ -57,9 +59,8 @@ public class SmsListener {
 	 **/
 	@EventListener
 	@Async
-	public void sendSmsSendMessage(SmsSendMessage message){
+	public void sendSmsSendMessage(SmsSendMessage message) {
 		smsSendService.doSendSms(message);
 	}
 
 }
-

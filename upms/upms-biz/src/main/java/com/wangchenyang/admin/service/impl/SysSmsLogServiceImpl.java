@@ -24,8 +24,9 @@ import java.util.Objects;
 @Service
 public class SysSmsLogServiceImpl extends ServiceImpl<SysSmsLogMapper, SysSmsLog> implements SysSmsLogService {
 
-    @Override
-    public Long createSmsLog(String mobile, Long userId, Integer userType, Boolean isSend, SysSmsTemplate template, String templateContent, Map<String, Object> templateParams) {
+	@Override
+	public Long createSmsLog(String mobile, Long userId, Integer userType, Boolean isSend, SysSmsTemplate template,
+			String templateContent, Map<String, Object> templateParams) {
 		SysSmsLog.SysSmsLogBuilder logBuilder = SysSmsLog.builder();
 		// 根据是否要发送，设置状态
 		logBuilder.sendStatus(Objects.equals(isSend, true) ? SmsSendStatusEnum.INIT.getStatus()
@@ -44,23 +45,25 @@ public class SysSmsLogServiceImpl extends ServiceImpl<SysSmsLogMapper, SysSmsLog
 		SysSmsLog log = logBuilder.build();
 		baseMapper.insert(log);
 		return log.getId();
-    }
+	}
 
 	@Override
-	public void updateSmsSendResult(Long id, Integer sendCode, String sendMsg, String apiSendCode, String apiSendMsg, String apiRequestId, String apiSerialNo) {
-		SmsSendStatusEnum sendStatus = R.ok().getCode()==sendCode ?
-				SmsSendStatusEnum.SUCCESS : SmsSendStatusEnum.FAILURE;
-		baseMapper.updateById(SysSmsLog.builder().id(id).sendStatus(sendStatus.getStatus())
-				.sendTime(new Date()).sendCode(sendCode).sendMsg(sendMsg)
-				.apiSendCode(apiSendCode).apiSendMsg(apiSendMsg)
+	public void updateSmsSendResult(Long id, Integer sendCode, String sendMsg, String apiSendCode, String apiSendMsg,
+			String apiRequestId, String apiSerialNo) {
+		SmsSendStatusEnum sendStatus = R.ok().getCode() == sendCode ? SmsSendStatusEnum.SUCCESS
+				: SmsSendStatusEnum.FAILURE;
+		baseMapper.updateById(SysSmsLog.builder().id(id).sendStatus(sendStatus.getStatus()).sendTime(new Date())
+				.sendCode(sendCode).sendMsg(sendMsg).apiSendCode(apiSendCode).apiSendMsg(apiSendMsg)
 				.apiRequestId(apiRequestId).apiSerialNo(apiSerialNo).build());
 	}
 
 	@Override
-	public void updateSmsReceiveResult(Long id, Boolean success, Date receiveTime, String apiReceiveCode, String apiReceiveMsg) {
-		SmsReceiveStatusEnum receiveStatus = Objects.equals(success, true) ?
-				SmsReceiveStatusEnum.SUCCESS : SmsReceiveStatusEnum.FAILURE;
+	public void updateSmsReceiveResult(Long id, Boolean success, Date receiveTime, String apiReceiveCode,
+			String apiReceiveMsg) {
+		SmsReceiveStatusEnum receiveStatus = Objects.equals(success, true) ? SmsReceiveStatusEnum.SUCCESS
+				: SmsReceiveStatusEnum.FAILURE;
 		baseMapper.updateById(SysSmsLog.builder().id(id).receiveStatus(receiveStatus.getStatus())
 				.receiveTime(receiveTime).apiReceiveCode(apiReceiveCode).apiReceiveMsg(apiReceiveMsg).build());
 	}
+
 }

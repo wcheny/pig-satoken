@@ -13,7 +13,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class KeyValue<K, V> {
 
-    private K key;
-    private V value;
+	private K key;
+
+	private V value;
 
 }

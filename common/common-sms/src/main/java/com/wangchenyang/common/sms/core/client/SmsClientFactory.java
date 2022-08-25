@@ -8,21 +8,19 @@ import com.wangchenyang.common.sms.core.property.SmsChannelProperties;
  */
 public interface SmsClientFactory {
 
-    /**
-     * 获得短信 Client
-     *
-     * @param channelId 渠道编号
-     * @return 短信 Client
-     */
-    SmsClient getSmsClient(Long channelId);
+	/**
+	 * 获得短信 Client
+	 * @param channelId 渠道编号
+	 * @return 短信 Client
+	 */
+	SmsClient getSmsClient(Long channelId);
 
 	/**
 	 * 获得短信 Client
-	 *
 	 * @param channelCode 渠道编号
 	 * @return 短信 Client
 	 */
-    SmsClient getSmsClient(String channelCode);
+	SmsClient getSmsClient(String channelCode);
 
 	/**
 	 * 移除短信 Client
@@ -34,11 +32,10 @@ public interface SmsClientFactory {
 	 */
 	void removeSmsClient(Long channelId);
 
-    /**
-     * 创建短信 Client
-     *
-     * @param properties 配置对象
-     */
-    void createOrUpdateSmsClient(SmsChannelProperties properties);
+	/**
+	 * 创建短信 Client
+	 * @param properties 配置对象
+	 */
+	void createOrUpdateSmsClient(SmsChannelProperties properties);
 
 }

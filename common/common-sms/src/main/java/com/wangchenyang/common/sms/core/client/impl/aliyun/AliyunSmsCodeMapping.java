@@ -1,6 +1,5 @@
 package com.wangchenyang.common.sms.core.client.impl.aliyun;
 
-
 import cn.hutool.http.HttpStatus;
 import com.squareup.okhttp.internal.framed.ErrorCode;
 import com.wangchenyang.common.core.util.R;
@@ -14,12 +13,14 @@ import com.wangchenyang.common.sms.core.client.SmsCodeMapping;
  */
 public class AliyunSmsCodeMapping implements SmsCodeMapping {
 
-    @Override
-    public Integer apply(String apiCode) {
-        switch (apiCode) {
-            case "OK": return R.ok().getCode();
-			default:return R.failed().getCode();
-        }
-    }
+	@Override
+	public Integer apply(String apiCode) {
+		switch (apiCode) {
+			case "OK":
+				return R.ok().getCode();
+			default:
+				return R.failed().getCode();
+		}
+	}
 
 }

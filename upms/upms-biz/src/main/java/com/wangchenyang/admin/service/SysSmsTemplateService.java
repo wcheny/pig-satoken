@@ -12,18 +12,33 @@ import java.util.Map;
  * @date 2022-08-23 10:11:48
  */
 public interface SysSmsTemplateService extends IService<SysSmsTemplate> {
-
-    void createSmsTemplate(SysSmsTemplate sysSmsTemplate);
-
+	/**
+	 * 创建短信模板
+	 *
+	 * @author 王晨阳
+	 * @version 1.0
+	 * @date 2022/8/25 15:50
+	 * @desc
+	**/
+	void createSmsTemplate(SysSmsTemplate sysSmsTemplate);
+	/**
+	 * 更新短信模板
+	 *
+	 * @author 王晨阳
+	 * @version 1.0
+	 * @date 2022/8/25 15:50
+	 * @desc
+	**/
 	void updateSmsTemplate(SysSmsTemplate sysSmsTemplate);
+
 	/**
 	 * 格式化短信内容
-	 *
 	 * @param content 短信模板的内容
 	 * @param params 内容的参数
 	 * @return 格式化后的内容
 	 */
-    String formatSmsTemplateContent(String content, Map<String, Object> params);
+	String formatSmsTemplateContent(String content, Map<String, Object> params);
+
 	/**
 	 * 查询模板
 	 *
@@ -31,6 +46,7 @@ public interface SysSmsTemplateService extends IService<SysSmsTemplate> {
 	 * @version 1.0
 	 * @date 2022/8/25 11:00
 	 * @desc
-	**/
+	 **/
 	SysSmsTemplate selectByCode(String code);
+
 }

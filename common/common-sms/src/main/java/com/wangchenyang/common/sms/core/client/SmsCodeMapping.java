@@ -11,4 +11,5 @@ import java.util.function.Function;
  *
  */
 public interface SmsCodeMapping extends Function<String, Integer> {
+
 }

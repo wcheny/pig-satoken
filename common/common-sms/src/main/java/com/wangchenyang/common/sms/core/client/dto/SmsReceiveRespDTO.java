@@ -13,36 +13,40 @@ import java.util.Date;
 @Accessors(chain = true)
 public class SmsReceiveRespDTO {
 
-    /**
-     * 是否接收成功
-     */
-    private Boolean success;
-    /**
-     * API 接收结果的编码
-     */
-    private String errorCode;
-    /**
-     * API 接收结果的说明
-     */
-    private String errorMsg;
+	/**
+	 * 是否接收成功
+	 */
+	private Boolean success;
 
-    /**
-     * 手机号
-     */
-    private String mobile;
-    /**
-     * 用户接收时间
-     */
-    private Date receiveTime;
+	/**
+	 * API 接收结果的编码
+	 */
+	private String errorCode;
 
-    /**
-     * 短信 API 发送返回的序号
-     */
-    private String serialNo;
-    /**
-     * 短信日志编号
-     *
-     */
-    private Long logId;
+	/**
+	 * API 接收结果的说明
+	 */
+	private String errorMsg;
+
+	/**
+	 * 手机号
+	 */
+	private String mobile;
+
+	/**
+	 * 用户接收时间
+	 */
+	private Date receiveTime;
+
+	/**
+	 * 短信 API 发送返回的序号
+	 */
+	private String serialNo;
+
+	/**
+	 * 短信日志编号
+	 *
+	 */
+	private Long logId;
 
 }

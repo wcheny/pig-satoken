@@ -22,23 +22,24 @@ import java.util.List;
  * @date 2022-08-23 10:11:48
  */
 @Service
-public class SysSmsChannelServiceImpl extends ServiceImpl<SysSmsChannelMapper, SysSmsChannel> implements SysSmsChannelService {
+public class SysSmsChannelServiceImpl extends ServiceImpl<SysSmsChannelMapper, SysSmsChannel>
+		implements SysSmsChannelService {
 
 	@Autowired
 	private SmsClientFactory smsClientFactory;
 
-    @Override
-    public void createSmsChannel(SysSmsChannel sysSmsChannel) {
+	@Override
+	public void createSmsChannel(SysSmsChannel sysSmsChannel) {
 		sysSmsChannel.setDelFlag(CommonConstants.STATUS_NORMAL);
 		save(sysSmsChannel);
 		SpringContextHolder.getApplicationContext().publishEvent(buildProperties(sysSmsChannel));
-    }
+	}
 
 	@Override
 	@PostConstruct
 	public void initSmsClients() {
 		List<SysSmsChannel> smsChannels = lambdaQuery().eq(SysSmsChannel::getStatus, 0).list();
-		smsChannels.forEach(item->smsClientFactory.createOrUpdateSmsClient(buildProperties(item)));
+		smsChannels.forEach(item -> smsClientFactory.createOrUpdateSmsClient(buildProperties(item)));
 	}
 
 	@Override
@@ -53,10 +54,10 @@ public class SysSmsChannelServiceImpl extends ServiceImpl<SysSmsChannelMapper, S
 		SpringContextHolder.getApplicationContext().publishEvent(new SmsChannelProperties().setId(id));
 	}
 
-	private SmsChannelProperties buildProperties(SysSmsChannel channel){
-		return new SmsChannelProperties().setCode(channel.getCode())
-				.setApiKey(channel.getApiKey()).setApiSecret(channel.getApiSecret())
-				.setId(channel.getId()).setSignature(channel.getSignature())
+	private SmsChannelProperties buildProperties(SysSmsChannel channel) {
+		return new SmsChannelProperties().setCode(channel.getCode()).setApiKey(channel.getApiKey())
+				.setApiSecret(channel.getApiSecret()).setId(channel.getId()).setSignature(channel.getSignature())
 				.setCallbackUrl(channel.getCallbackUrl());
 	}
+
 }

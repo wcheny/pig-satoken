@@ -55,8 +55,8 @@ public class AppServiceImpl implements AppService {
 
 	private final SmsSendService smsSendService;
 
-	//验证码模板Code
-	private final static String SEND_TEMPLATE_CODE="";
+	// 验证码模板Code
+	private final static String SEND_TEMPLATE_CODE = "";
 
 	/**
 	 * 发送手机验证码
@@ -83,9 +83,9 @@ public class AppServiceImpl implements AppService {
 		RedisUtils.setCacheObject(CacheConstants.DEFAULT_CODE_KEY + phone, code,
 				Duration.ofSeconds(SecurityConstants.CODE_TIME));
 		// 调用短信通道发送
-		Map<String,Object> paramsMap=new HashMap<>(1);
-		paramsMap.put("code",code);
-		smsSendService.sendSingleSmsToAdmin(phone,null,SEND_TEMPLATE_CODE,paramsMap);
+		Map<String, Object> paramsMap = new HashMap<>(1);
+		paramsMap.put("code", code);
+		smsSendService.sendSingleSmsToAdmin(phone, null, SEND_TEMPLATE_CODE, paramsMap);
 		return R.ok(Boolean.TRUE);
 	}
 
