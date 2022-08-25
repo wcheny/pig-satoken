@@ -42,5 +42,6 @@
         <module>common-feign</module>
         <module>common-satoken</module>
         <module>common-redis</module>
+        <module>common-sms</module>
     </modules>
 </project>

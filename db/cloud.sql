@@ -11,7 +11,7 @@
  Target Server Version : 80027
  File Encoding         : 65001
 
- Date: 18/08/2022 20:09:32
+ Date: 25/08/2022 14:18:19
 */
 
 SET NAMES utf8mb4;
@@ -104,11 +104,14 @@ CREATE TABLE `sys_dict` (
 -- Records of sys_dict
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_dict` (`id`, `type`, `description`, `remark`, `system_flag`, `del_flag`, `create_time`, `create_by`, `update_by`, `update_time`) VALUES (1, 'dict_type', '字典类型', NULL, '0', '0', '2019-05-16 14:16:20', '', 'admin', '2022-08-18 10:34:11');
+INSERT INTO `sys_dict` (`id`, `type`, `description`, `remark`, `system_flag`, `del_flag`, `create_time`, `create_by`, `update_by`, `update_time`) VALUES (1, 'dict_type', '字典类型', NULL, '0', '0', '2019-05-16 14:16:20', '', 'admin', '2022-08-23 10:01:25');
 INSERT INTO `sys_dict` (`id`, `type`, `description`, `remark`, `system_flag`, `del_flag`, `create_time`, `create_by`, `update_by`, `update_time`) VALUES (2, 'log_type', '日志类型', NULL, '0', '0', '2020-03-13 14:21:01', '', 'admin', '2021-12-29 12:30:14');
 INSERT INTO `sys_dict` (`id`, `type`, `description`, `remark`, `system_flag`, `del_flag`, `create_time`, `create_by`, `update_by`, `update_time`) VALUES (3, 'ds_type', '驱动类型', NULL, '0', '0', '2021-10-15 16:24:35', '', 'admin', '2021-12-29 12:30:18');
 INSERT INTO `sys_dict` (`id`, `type`, `description`, `remark`, `system_flag`, `del_flag`, `create_time`, `create_by`, `update_by`, `update_time`) VALUES (4, 'param_type', '参数配置', '检索、原文、报表、安全、文档、消息、其他', '1', '0', '2022-03-25 20:51:26', 'admin', 'admin', '2022-03-25 20:51:26');
 INSERT INTO `sys_dict` (`id`, `type`, `description`, `remark`, `system_flag`, `del_flag`, `create_time`, `create_by`, `update_by`, `update_time`) VALUES (5, 'status_type', '租户状态', '租户状态', '1', '0', '2022-03-25 20:56:51', 'admin', 'admin', '2022-03-25 20:56:51');
+INSERT INTO `sys_dict` (`id`, `type`, `description`, `remark`, `system_flag`, `del_flag`, `create_time`, `create_by`, `update_by`, `update_time`) VALUES (1561896837498417154, 'system_sms_channel_code', '短信渠道编码', '', '0', '0', '2022-08-23 10:03:19', 'admin', 'admin', '2022-08-23 10:03:19');
+INSERT INTO `sys_dict` (`id`, `type`, `description`, `remark`, `system_flag`, `del_flag`, `create_time`, `create_by`, `update_by`, `update_time`) VALUES (1561896965349191682, 'sys_sms_template_type', '短信模板类型', '', '1', '0', '2022-08-23 10:03:50', 'admin', 'admin', '2022-08-23 10:03:50');
+INSERT INTO `sys_dict` (`id`, `type`, `description`, `remark`, `system_flag`, `del_flag`, `create_time`, `create_by`, `update_by`, `update_time`) VALUES (1561897142592090114, 'system_sms_send_status', '短信发送状态', '', '1', '0', '2022-08-23 10:04:32', 'admin', 'admin', '2022-08-23 10:04:32');
 COMMIT;
 
 -- ----------------------------
@@ -161,6 +164,10 @@ INSERT INTO `sys_dict_item` (`id`, `dict_id`, `value`, `label`, `type`, `descrip
 INSERT INTO `sys_dict_item` (`id`, `dict_id`, `value`, `label`, `type`, `description`, `sort_order`, `remark`, `del_flag`, `create_time`, `create_by`, `update_by`, `update_time`) VALUES (20, 4, '0', '默认', 'param_type', '默认', 7, '默认', '0', '2022-03-25 20:55:23', 'admin', 'admin', '2022-03-25 20:55:23');
 INSERT INTO `sys_dict_item` (`id`, `dict_id`, `value`, `label`, `type`, `description`, `sort_order`, `remark`, `del_flag`, `create_time`, `create_by`, `update_by`, `update_time`) VALUES (21, 5, '0', '正常', 'status_type', '状态正常', 0, '状态正常', '0', '2022-03-25 20:57:12', 'admin', 'admin', '2022-03-25 20:57:12');
 INSERT INTO `sys_dict_item` (`id`, `dict_id`, `value`, `label`, `type`, `description`, `sort_order`, `remark`, `del_flag`, `create_time`, `create_by`, `update_by`, `update_time`) VALUES (22, 5, '9', '冻结', 'status_type', '状态冻结', 1, '状态冻结', '0', '2022-03-25 20:57:34', 'admin', 'admin', '2022-03-25 20:57:34');
+INSERT INTO `sys_dict_item` (`id`, `dict_id`, `value`, `label`, `type`, `description`, `sort_order`, `remark`, `del_flag`, `create_time`, `create_by`, `update_by`, `update_time`) VALUES (1561971299308711938, 1561896837498417154, 'ALIYUN', '阿里云', 'system_sms_channel_code', ' ', 0, '', '0', '2022-08-23 14:59:12', 'admin', 'admin', '2022-08-23 14:59:12');
+INSERT INTO `sys_dict_item` (`id`, `dict_id`, `value`, `label`, `type`, `description`, `sort_order`, `remark`, `del_flag`, `create_time`, `create_by`, `update_by`, `update_time`) VALUES (1562262730346762242, 1561896965349191682, '1', '验证码', 'sys_sms_template_type', ' ', 0, '', '0', '2022-08-24 10:17:15', 'admin', 'admin', '2022-08-24 10:17:15');
+INSERT INTO `sys_dict_item` (`id`, `dict_id`, `value`, `label`, `type`, `description`, `sort_order`, `remark`, `del_flag`, `create_time`, `create_by`, `update_by`, `update_time`) VALUES (1562262817726697474, 1561896965349191682, '3', '营销', 'sys_sms_template_type', ' ', 1, '', '0', '2022-08-24 10:17:36', 'admin', 'admin', '2022-08-24 10:17:36');
+INSERT INTO `sys_dict_item` (`id`, `dict_id`, `value`, `label`, `type`, `description`, `sort_order`, `remark`, `del_flag`, `create_time`, `create_by`, `update_by`, `update_time`) VALUES (1562262869639598082, 1561896965349191682, '2', '通知', 'sys_sms_template_type', ' ', 3, '', '0', '2022-08-24 10:17:48', 'admin', 'admin', '2022-08-24 10:17:48');
 COMMIT;
 
 -- ----------------------------
@@ -222,13 +229,6 @@ CREATE TABLE `sys_log` (
 BEGIN;
 INSERT INTO `sys_log` (`id`, `type`, `title`, `service_id`, `remote_addr`, `user_agent`, `request_uri`, `method`, `params`, `time`, `del_flag`, `exception`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES (1560152531221827586, '0', 'admin登录成功', 'auth', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36', '/login', 'POST', 'randomStr=%5B49661660804321347%5D&password=%5B123456%5D&code=%5B15%5D&username=%5Badmin%5D', 0, '0', NULL, '2022-08-18 14:32:04', '2022-08-18 14:32:04', 'admin', 'admin');
 INSERT INTO `sys_log` (`id`, `type`, `title`, `service_id`, `remote_addr`, `user_agent`, `request_uri`, `method`, `params`, `time`, `del_flag`, `exception`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES (1560153833851015170, '0', 'admin退出登陆', 'auth', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36', '/logout', 'DELETE', '', 0, '0', NULL, '2022-08-18 14:37:15', '2022-08-18 14:37:15', 'admin', 'admin');
-INSERT INTO `sys_log` (`id`, `type`, `title`, `service_id`, `remote_addr`, `user_agent`, `request_uri`, `method`, `params`, `time`, `del_flag`, `exception`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES (1560154460597473281, '0', 'admin登录成功', 'auth', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36', '/login', 'POST', 'randomStr=%5B18241660804781489%5D&password=%5B123456%5D&code=%5B12%5D&username=%5Badmin%5D', 0, '0', NULL, '2022-08-18 14:39:44', '2022-08-18 14:39:44', 'admin', 'admin');
-INSERT INTO `sys_log` (`id`, `type`, `title`, `service_id`, `remote_addr`, `user_agent`, `request_uri`, `method`, `params`, `time`, `del_flag`, `exception`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES (1560169240276193281, '0', 'admin登录成功', 'auth', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36', '/login', 'POST', 'randomStr=%5B31261660808304945%5D&password=%5B123456%5D&code=%5B-5%5D&username=%5Badmin%5D', 0, '0', NULL, '2022-08-18 15:38:28', '2022-08-18 15:38:28', 'admin', 'admin');
-INSERT INTO `sys_log` (`id`, `type`, `title`, `service_id`, `remote_addr`, `user_agent`, `request_uri`, `method`, `params`, `time`, `del_flag`, `exception`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES (1560172825034575874, '0', 'admin登录成功', 'auth', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36', '/login', 'POST', 'randomStr=%5B88631660809160255%5D&password=%5B123456%5D&code=%5B1%5D&username=%5Badmin%5D', 0, '0', NULL, '2022-08-18 15:52:43', '2022-08-18 15:52:43', 'admin', 'admin');
-INSERT INTO `sys_log` (`id`, `type`, `title`, `service_id`, `remote_addr`, `user_agent`, `request_uri`, `method`, `params`, `time`, `del_flag`, `exception`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES (1560200699150028801, '0', 'admin登录成功', 'auth', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36', '/login', 'POST', 'randomStr=%5B57231660815803834%5D&password=%5B123456%5D&code=%5B7%5D&username=%5Badmin%5D', 0, '0', NULL, '2022-08-18 17:43:28', '2022-08-18 17:43:28', 'admin', 'admin');
-INSERT INTO `sys_log` (`id`, `type`, `title`, `service_id`, `remote_addr`, `user_agent`, `request_uri`, `method`, `params`, `time`, `del_flag`, `exception`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES (1560236876234174466, '0', 'admin登录成功', 'auth', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36', '/login', 'POST', 'randomStr=%5B75531660824427851%5D&password=%5B123456%5D&code=%5B10%5D&username=%5Badmin%5D', 0, '0', NULL, '2022-08-18 20:07:14', '2022-08-18 20:07:14', 'admin', 'admin');
-INSERT INTO `sys_log` (`id`, `type`, `title`, `service_id`, `remote_addr`, `user_agent`, `request_uri`, `method`, `params`, `time`, `del_flag`, `exception`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES (1560236951870058497, '0', 'admin退出登陆', 'auth', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36', '/logout', 'DELETE', '', 0, '0', NULL, '2022-08-18 20:07:32', '2022-08-18 20:07:32', 'admin', 'admin');
-INSERT INTO `sys_log` (`id`, `type`, `title`, `service_id`, `remote_addr`, `user_agent`, `request_uri`, `method`, `params`, `time`, `del_flag`, `exception`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES (1560236965337968641, '0', 'admin登录成功', 'auth', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36', '/login', 'POST', 'randomStr=%5B61671660824451792%5D&password=%5B123456%5D&code=%5B-3%5D&username=%5Badmin%5D', 0, '0', NULL, '2022-08-18 20:07:35', '2022-08-18 20:07:35', 'admin', 'admin');
 COMMIT;
 
 -- ----------------------------
@@ -315,8 +315,29 @@ INSERT INTO `sys_menu` (`menu_id`, `name`, `permission`, `path`, `parent_id`, `i
 INSERT INTO `sys_menu` (`menu_id`, `name`, `permission`, `path`, `parent_id`, `icon`, `sort_order`, `keep_alive`, `type`, `del_flag`, `create_by`, `create_time`, `update_by`, `update_time`) VALUES (3400, '表单设计', NULL, '/gen/design', 3000, 'icon-biaodanbiaoqian', 2, '1', '0', '0', ' ', '2020-03-11 22:18:05', ' ', '2020-03-12 00:16:25');
 INSERT INTO `sys_menu` (`menu_id`, `name`, `permission`, `path`, `parent_id`, `icon`, `sort_order`, `keep_alive`, `type`, `del_flag`, `create_by`, `create_time`, `update_by`, `update_time`) VALUES (4000, '服务监控', NULL, 'http://localhost:5001/login', -1, 'icon-zhexiantu', 4, '0', '0', '0', 'admin', '2022-03-21 09:44:50', 'admin', '2022-03-21 09:47:06');
 INSERT INTO `sys_menu` (`menu_id`, `name`, `permission`, `path`, `parent_id`, `icon`, `sort_order`, `keep_alive`, `type`, `del_flag`, `create_by`, `create_time`, `update_by`, `update_time`) VALUES (9999, '系统官网', NULL, 'https://yifan4cloud.com/#/', -1, 'icon-guanwangfangwen', 999, '0', '0', '1', ' ', '2019-01-17 17:05:19', 'admin', '2022-08-18 13:53:51');
+INSERT INTO `sys_menu` (`menu_id`, `name`, `permission`, `path`, `parent_id`, `icon`, `sort_order`, `keep_alive`, `type`, `del_flag`, `create_by`, `create_time`, `update_by`, `update_time`) VALUES (1661220708246, '短信渠道', '', '/admin/smschannel/index', 1561901408090206210, 'icon-guiji', 0, '0', '0', '0', NULL, '2018-01-20 13:17:19', 'admin', '2022-08-25 13:35:22');
+INSERT INTO `sys_menu` (`menu_id`, `name`, `permission`, `path`, `parent_id`, `icon`, `sort_order`, `keep_alive`, `type`, `del_flag`, `create_by`, `create_time`, `update_by`, `update_time`) VALUES (1661220708247, '短信渠道查看', 'smschannel_get', NULL, 1661220708246, '1', 0, '0', '1', '0', NULL, '2018-05-15 21:35:18', 'admin', '2022-08-25 13:35:53');
+INSERT INTO `sys_menu` (`menu_id`, `name`, `permission`, `path`, `parent_id`, `icon`, `sort_order`, `keep_alive`, `type`, `del_flag`, `create_by`, `create_time`, `update_by`, `update_time`) VALUES (1661220708248, '短信渠道新增', 'smschannel_add', NULL, 1661220708246, '1', 1, '0', '1', '0', NULL, '2018-05-15 21:35:18', 'admin', '2022-08-25 13:36:01');
+INSERT INTO `sys_menu` (`menu_id`, `name`, `permission`, `path`, `parent_id`, `icon`, `sort_order`, `keep_alive`, `type`, `del_flag`, `create_by`, `create_time`, `update_by`, `update_time`) VALUES (1661220708249, '短信渠道修改', 'smschannel_edit', NULL, 1661220708246, '1', 2, '0', '1', '0', NULL, '2018-05-15 21:35:18', 'admin', '2022-08-25 13:36:06');
+INSERT INTO `sys_menu` (`menu_id`, `name`, `permission`, `path`, `parent_id`, `icon`, `sort_order`, `keep_alive`, `type`, `del_flag`, `create_by`, `create_time`, `update_by`, `update_time`) VALUES (1661220708250, '短信渠道删除', 'smschannel_del', NULL, 1661220708246, '1', 3, '0', '1', '0', NULL, '2018-05-15 21:35:18', 'admin', '2022-08-25 13:36:11');
+INSERT INTO `sys_menu` (`menu_id`, `name`, `permission`, `path`, `parent_id`, `icon`, `sort_order`, `keep_alive`, `type`, `del_flag`, `create_by`, `create_time`, `update_by`, `update_time`) VALUES (1661220708338, '验证码管理', '', '/admin/smscode/index', 1561901408090206210, 'icon-shouji', 2, '0', '0', '1', NULL, '2018-01-20 13:17:19', 'admin', '2022-08-25 13:35:13');
+INSERT INTO `sys_menu` (`menu_id`, `name`, `permission`, `path`, `parent_id`, `icon`, `sort_order`, `keep_alive`, `type`, `del_flag`, `create_by`, `create_time`, `update_by`, `update_time`) VALUES (1661220708339, '手机验证码查看', 'admin_syssmscode_get', NULL, 1661220708338, '1', 0, '0', '1', '1', NULL, '2018-05-15 21:35:18', 'admin', '2022-08-25 13:35:05');
+INSERT INTO `sys_menu` (`menu_id`, `name`, `permission`, `path`, `parent_id`, `icon`, `sort_order`, `keep_alive`, `type`, `del_flag`, `create_by`, `create_time`, `update_by`, `update_time`) VALUES (1661220708340, '手机验证码新增', 'admin_syssmscode_add', NULL, 1661220708338, '1', 1, '0', '1', '1', NULL, '2018-05-15 21:35:18', 'admin', '2022-08-25 13:35:06');
+INSERT INTO `sys_menu` (`menu_id`, `name`, `permission`, `path`, `parent_id`, `icon`, `sort_order`, `keep_alive`, `type`, `del_flag`, `create_by`, `create_time`, `update_by`, `update_time`) VALUES (1661220708341, '手机验证码修改', 'admin_syssmscode_edit', NULL, 1661220708338, '1', 2, '0', '1', '1', NULL, '2018-05-15 21:35:18', 'admin', '2022-08-25 13:35:09');
+INSERT INTO `sys_menu` (`menu_id`, `name`, `permission`, `path`, `parent_id`, `icon`, `sort_order`, `keep_alive`, `type`, `del_flag`, `create_by`, `create_time`, `update_by`, `update_time`) VALUES (1661220708342, '手机验证码删除', 'admin_syssmscode_del', NULL, 1661220708338, '1', 3, '0', '1', '1', NULL, '2018-05-15 21:35:18', 'admin', '2022-08-25 13:35:11');
+INSERT INTO `sys_menu` (`menu_id`, `name`, `permission`, `path`, `parent_id`, `icon`, `sort_order`, `keep_alive`, `type`, `del_flag`, `create_by`, `create_time`, `update_by`, `update_time`) VALUES (1661220708377, '短信日志', '', '/admin/smslog/index', 1561901408090206210, 'icon-shejiyukaifa-', 3, '0', '0', '0', NULL, '2018-01-20 13:17:19', 'admin', '2022-08-25 13:35:37');
+INSERT INTO `sys_menu` (`menu_id`, `name`, `permission`, `path`, `parent_id`, `icon`, `sort_order`, `keep_alive`, `type`, `del_flag`, `create_by`, `create_time`, `update_by`, `update_time`) VALUES (1661220708378, '短信日志查看', 'smslog_get', NULL, 1661220708377, '1', 0, '0', '1', '0', NULL, '2018-05-15 21:35:18', 'admin', '2022-08-25 13:37:08');
+INSERT INTO `sys_menu` (`menu_id`, `name`, `permission`, `path`, `parent_id`, `icon`, `sort_order`, `keep_alive`, `type`, `del_flag`, `create_by`, `create_time`, `update_by`, `update_time`) VALUES (1661220708379, '短信日志新增', 'admin_syssmslog_add', NULL, 1661220708377, '1', 1, '0', '1', '1', NULL, '2018-05-15 21:35:18', 'admin', '2022-08-25 13:37:14');
+INSERT INTO `sys_menu` (`menu_id`, `name`, `permission`, `path`, `parent_id`, `icon`, `sort_order`, `keep_alive`, `type`, `del_flag`, `create_by`, `create_time`, `update_by`, `update_time`) VALUES (1661220708380, '短信日志修改', 'admin_syssmslog_edit', NULL, 1661220708377, '1', 2, '0', '1', '1', NULL, '2018-05-15 21:35:18', 'admin', '2022-08-25 13:37:16');
+INSERT INTO `sys_menu` (`menu_id`, `name`, `permission`, `path`, `parent_id`, `icon`, `sort_order`, `keep_alive`, `type`, `del_flag`, `create_by`, `create_time`, `update_by`, `update_time`) VALUES (1661220708381, '短信日志删除', 'admin_syssmslog_del', NULL, 1661220708377, '1', 3, '0', '1', '1', NULL, '2018-05-15 21:35:18', 'admin', '2022-08-25 13:37:18');
+INSERT INTO `sys_menu` (`menu_id`, `name`, `permission`, `path`, `parent_id`, `icon`, `sort_order`, `keep_alive`, `type`, `del_flag`, `create_by`, `create_time`, `update_by`, `update_time`) VALUES (1661220708413, '短信模板', '', '/admin/smstemplate/index', 1561901408090206210, 'icon-wendang', 1, '0', '0', '0', NULL, '2018-01-20 13:17:19', 'admin', '2022-08-25 13:35:30');
+INSERT INTO `sys_menu` (`menu_id`, `name`, `permission`, `path`, `parent_id`, `icon`, `sort_order`, `keep_alive`, `type`, `del_flag`, `create_by`, `create_time`, `update_by`, `update_time`) VALUES (1661220708414, '短信模板查看', 'smstemplate_get', NULL, 1661220708413, '1', 0, '0', '1', '0', NULL, '2018-05-15 21:35:18', 'admin', '2022-08-25 13:36:43');
+INSERT INTO `sys_menu` (`menu_id`, `name`, `permission`, `path`, `parent_id`, `icon`, `sort_order`, `keep_alive`, `type`, `del_flag`, `create_by`, `create_time`, `update_by`, `update_time`) VALUES (1661220708415, '短信模板新增', 'smstemplate_add', NULL, 1661220708413, '1', 1, '0', '1', '0', NULL, '2018-05-15 21:35:18', 'admin', '2022-08-25 13:36:48');
+INSERT INTO `sys_menu` (`menu_id`, `name`, `permission`, `path`, `parent_id`, `icon`, `sort_order`, `keep_alive`, `type`, `del_flag`, `create_by`, `create_time`, `update_by`, `update_time`) VALUES (1661220708416, '短信模板修改', 'smstemplate_edit', NULL, 1661220708413, '1', 2, '0', '1', '0', NULL, '2018-05-15 21:35:18', 'admin', '2022-08-25 13:36:52');
+INSERT INTO `sys_menu` (`menu_id`, `name`, `permission`, `path`, `parent_id`, `icon`, `sort_order`, `keep_alive`, `type`, `del_flag`, `create_by`, `create_time`, `update_by`, `update_time`) VALUES (1661220708417, '短信模板删除', 'smstemplate_del', NULL, 1661220708413, '1', 3, '0', '1', '0', NULL, '2018-05-15 21:35:18', 'admin', '2022-08-25 13:36:56');
 INSERT INTO `sys_menu` (`menu_id`, `name`, `permission`, `path`, `parent_id`, `icon`, `sort_order`, `keep_alive`, `type`, `del_flag`, `create_by`, `create_time`, `update_by`, `update_time`) VALUES (1551475636716335105, '动态路由', NULL, '/admin/route/index', 2000, 'icon-luyou', 6, '1', '0', '1', 'admin', NULL, 'admin', '2022-08-04 11:33:07');
 INSERT INTO `sys_menu` (`menu_id`, `name`, `permission`, `path`, `parent_id`, `icon`, `sort_order`, `keep_alive`, `type`, `del_flag`, `create_by`, `create_time`, `update_by`, `update_time`) VALUES (1555054660101255169, '积木报表', NULL, '/admin/jimu/index', 2000, 'icon-msnui-supervise', 5, '1', '0', '0', 'admin', '2022-08-04 12:54:57', 'admin', '2022-08-04 12:54:57');
+INSERT INTO `sys_menu` (`menu_id`, `name`, `permission`, `path`, `parent_id`, `icon`, `sort_order`, `keep_alive`, `type`, `del_flag`, `create_by`, `create_time`, `update_by`, `update_time`) VALUES (1561901408090206210, '短信管理', NULL, '/sms', -1, 'icon-xiaoxiguanli', 5, '0', '0', '0', 'admin', '2022-08-23 10:21:29', 'admin', '2022-08-23 10:21:29');
 COMMIT;
 
 -- ----------------------------
@@ -467,9 +488,121 @@ INSERT INTO `sys_role_menu` (`role_id`, `menu_id`) VALUES (1, 3302);
 INSERT INTO `sys_role_menu` (`role_id`, `menu_id`) VALUES (1, 3303);
 INSERT INTO `sys_role_menu` (`role_id`, `menu_id`) VALUES (1, 3400);
 INSERT INTO `sys_role_menu` (`role_id`, `menu_id`) VALUES (1, 4000);
+INSERT INTO `sys_role_menu` (`role_id`, `menu_id`) VALUES (1, 1661220708246);
+INSERT INTO `sys_role_menu` (`role_id`, `menu_id`) VALUES (1, 1661220708247);
+INSERT INTO `sys_role_menu` (`role_id`, `menu_id`) VALUES (1, 1661220708248);
+INSERT INTO `sys_role_menu` (`role_id`, `menu_id`) VALUES (1, 1661220708249);
+INSERT INTO `sys_role_menu` (`role_id`, `menu_id`) VALUES (1, 1661220708250);
+INSERT INTO `sys_role_menu` (`role_id`, `menu_id`) VALUES (1, 1661220708377);
+INSERT INTO `sys_role_menu` (`role_id`, `menu_id`) VALUES (1, 1661220708378);
+INSERT INTO `sys_role_menu` (`role_id`, `menu_id`) VALUES (1, 1661220708413);
+INSERT INTO `sys_role_menu` (`role_id`, `menu_id`) VALUES (1, 1661220708414);
+INSERT INTO `sys_role_menu` (`role_id`, `menu_id`) VALUES (1, 1661220708415);
+INSERT INTO `sys_role_menu` (`role_id`, `menu_id`) VALUES (1, 1661220708416);
+INSERT INTO `sys_role_menu` (`role_id`, `menu_id`) VALUES (1, 1661220708417);
 INSERT INTO `sys_role_menu` (`role_id`, `menu_id`) VALUES (1, 1555054660101255169);
+INSERT INTO `sys_role_menu` (`role_id`, `menu_id`) VALUES (1, 1561901408090206210);
 INSERT INTO `sys_role_menu` (`role_id`, `menu_id`) VALUES (2, 4000);
 COMMIT;
+
+-- ----------------------------
+-- Table structure for sys_sms_channel
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_sms_channel`;
+CREATE TABLE `sys_sms_channel` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `signature` varchar(12) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '短信签名',
+  `code` varchar(63) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '渠道编码',
+  `status` tinyint NOT NULL DEFAULT '1' COMMENT '开启状态 0开启 1关闭',
+  `remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '备注',
+  `api_key` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '短信 API 的账号',
+  `api_secret` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '短信 API 的秘钥',
+  `callback_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '短信发送回调 URL',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '修改时间',
+  `create_by` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '创建者',
+  `update_by` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '更新人',
+  `del_flag` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT '0' COMMENT '0-正常，1-删除',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3 COMMENT='短信渠道';
+
+-- ----------------------------
+-- Records of sys_sms_channel
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for sys_sms_log
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_sms_log`;
+CREATE TABLE `sys_sms_log` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `channel_id` bigint NOT NULL COMMENT '短信渠道编号',
+  `channel_code` varchar(63) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '短信渠道编码',
+  `template_id` bigint NOT NULL COMMENT '模板编号',
+  `template_code` varchar(63) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '模板编码',
+  `template_type` tinyint NOT NULL COMMENT '短信类型',
+  `template_content` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '短信内容',
+  `template_params` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '短信参数',
+  `api_template_id` varchar(63) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '短信 API 的模板编号',
+  `mobile` varchar(11) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '手机号',
+  `user_id` bigint DEFAULT NULL COMMENT '用户编号',
+  `user_type` tinyint DEFAULT NULL COMMENT '用户类型',
+  `send_status` tinyint NOT NULL DEFAULT '0' COMMENT '发送状态',
+  `send_time` datetime DEFAULT NULL COMMENT '发送时间',
+  `send_code` int DEFAULT NULL COMMENT '发送结果的编码',
+  `send_msg` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '发送结果的提示',
+  `api_send_code` varchar(63) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '短信 API 发送结果的编码',
+  `api_send_msg` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '短信 API 发送失败的提示',
+  `api_request_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '短信 API 发送返回的唯一请求 ID',
+  `api_serial_no` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '短信 API 发送返回的序号',
+  `receive_status` tinyint NOT NULL DEFAULT '0' COMMENT '接收状态',
+  `receive_time` datetime DEFAULT NULL COMMENT '接收时间',
+  `api_receive_code` varchar(63) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT 'API 接收结果的编码',
+  `api_receive_msg` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT 'API 接收结果的说明',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '修改时间',
+  `create_by` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '创建者',
+  `update_by` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '更新人',
+  `del_flag` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT '0' COMMENT '0-正常，1-删除',
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `mobile` (`mobile`),
+  KEY `channel_id` (`channel_id`),
+  KEY `template_id` (`template_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=340 DEFAULT CHARSET=utf8mb3 COMMENT='短信日志';
+
+-- ----------------------------
+-- Records of sys_sms_log
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for sys_sms_template
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_sms_template`;
+CREATE TABLE `sys_sms_template` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `type` tinyint NOT NULL COMMENT '短信类型',
+  `status` tinyint NOT NULL COMMENT '开启状态',
+  `code` varchar(63) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '模板编码',
+  `name` varchar(63) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '模板名称',
+  `content` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '模板内容',
+  `params` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '参数数组',
+  `remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '备注',
+  `api_template_id` varchar(63) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '短信 API 的模板编号',
+  `channel_id` bigint NOT NULL COMMENT '短信渠道编号',
+  `channel_code` varchar(63) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '短信渠道编码',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '修改时间',
+  `create_by` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '创建者',
+  `update_by` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '更新人',
+  `del_flag` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT '0' COMMENT '0-正常，1-删除',
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE KEY `code` (`code`),
+  KEY `channel_id` (`channel_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb3 COMMENT='短信模板';
+
+-- ----------------------------
+-- Records of sys_sms_template
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -515,6 +648,7 @@ CREATE TABLE `sys_user_post` (
 -- ----------------------------
 BEGIN;
 INSERT INTO `sys_user_post` (`user_id`, `post_id`) VALUES (1, 1);
+INSERT INTO `sys_user_post` (`user_id`, `post_id`) VALUES (1560274147150917634, 1);
 COMMIT;
 
 -- ----------------------------
@@ -532,6 +666,8 @@ CREATE TABLE `sys_user_role` (
 -- ----------------------------
 BEGIN;
 INSERT INTO `sys_user_role` (`user_id`, `role_id`) VALUES (1, 1);
+INSERT INTO `sys_user_role` (`user_id`, `role_id`) VALUES (1560274147150917634, 2);
 COMMIT;
+
 
 SET FOREIGN_KEY_CHECKS = 1;

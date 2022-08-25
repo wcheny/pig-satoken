@@ -14,4 +14,4 @@ spring:
   config:
     import:
       - nacos:application-@profiles.active@.yml
-      - nacos:${spring.application.name}-@profiles.active@.yml
+#      - nacos:${spring.application.name}-@profiles.active@.yml

@@ -83,6 +83,7 @@ public class LoginHelper {
 			String loginId = StpUtil.getLoginIdAsString();
 			String[] strs = StringUtils.split(loginId, JOIN_CODE);
 			// 用户id在总是在最后
+			assert strs != null;
 			String userId = strs[strs.length - 1];
 			if (StrUtil.isBlank(userId)) {
 				throw new RuntimeException("登录用户: LoginId异常 => " + loginId);

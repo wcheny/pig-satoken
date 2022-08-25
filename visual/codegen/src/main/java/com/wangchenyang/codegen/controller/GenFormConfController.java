@@ -16,6 +16,7 @@
 
 package com.wangchenyang.codegen.controller;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -25,7 +26,6 @@ import com.wangchenyang.common.core.util.R;
 import com.wangchenyang.common.log.annotation.SysLog;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -80,7 +80,7 @@ public class GenFormConfController {
 	 */
 	@SysLog("新增生成记录")
 	@PostMapping
-	@PreAuthorize("@pms.hasPermission('gen_form_add')")
+	@SaCheckPermission("gen_form_add")
 	public R<Boolean> save(@RequestBody GenFormConf formConf) {
 		return R.ok(genRecordService.save(formConf));
 	}
@@ -92,7 +92,7 @@ public class GenFormConfController {
 	 */
 	@SysLog("通过id删除生成记录")
 	@DeleteMapping("/{id}")
-	@PreAuthorize("@pms.hasPermission('gen_form_del')")
+	@SaCheckPermission("gen_form_del")
 	public R<Boolean> removeById(@PathVariable Long id) {
 		return R.ok(genRecordService.removeById(id));
 	}

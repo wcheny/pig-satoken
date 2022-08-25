@@ -7,9 +7,7 @@ import com.wangchenyang.common.core.util.R;
 import com.wangchenyang.common.log.annotation.SysLog;
 import ${package}.${moduleName}.entity.${className};
 import ${package}.${moduleName}.service.${className}Service;
-import org.springframework.security.access.prepost.PreAuthorize;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 
 

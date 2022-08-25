@@ -33,6 +33,9 @@
         <sms.version>2.0.2</sms.version>
         <jaxb.version>2.3.5</jaxb.version>
         <sentinel.version>1.8.4</sentinel.version>
+		<aliyun-java-sdk-core.version>4.5.25</aliyun-java-sdk-core.version>
+		<aliyun-java-sdk-dysmsapi.version>2.1.0</aliyun-java-sdk-dysmsapi.version>
+		<tencentcloud-sdk-java.version>3.1.471</tencentcloud-sdk-java.version>
     </properties>
 
     <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号-->
@@ -51,6 +54,11 @@
 			<dependency>
 				<groupId>com.wangchenyang</groupId>
 				<artifactId>common-satoken</artifactId>
+				<version>${yifan.common.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.wangchenyang</groupId>
+				<artifactId>common-sms</artifactId>
 				<version>${yifan.common.version}</version>
 			</dependency>
 			<dependency>
@@ -121,6 +129,21 @@
                 <artifactId>aliyun-sms-spring-boot-starter</artifactId>
                 <version>${sms.version}</version>
             </dependency>
+			<dependency>
+				<groupId>com.aliyun</groupId>
+				<artifactId>aliyun-java-sdk-core</artifactId>
+				<version>${aliyun-java-sdk-core.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.aliyun</groupId>
+				<artifactId>aliyun-java-sdk-dysmsapi</artifactId>
+				<version>${aliyun-java-sdk-dysmsapi.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.tencentcloudapi</groupId>
+				<artifactId>tencentcloud-sdk-java</artifactId>
+				<version>${tencentcloud-sdk-java.version}</version>
+			</dependency>
             <!--oss-->
             <dependency>
                 <groupId>com.pig4cloud.plugin</groupId>

@@ -16,6 +16,10 @@
 
 package com.wangchenyang.common.feign.sentinel.handle;
 
+import cn.dev33.satoken.exception.IdTokenInvalidException;
+import cn.dev33.satoken.exception.NotLoginException;
+import cn.dev33.satoken.exception.NotPermissionException;
+import cn.dev33.satoken.exception.NotRoleException;
 import com.alibaba.csp.sentinel.Tracer;
 import com.wangchenyang.common.core.util.R;
 import lombok.extern.slf4j.Slf4j;
@@ -24,11 +28,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -45,6 +51,50 @@ import java.util.List;
 public class GlobalBizExceptionHandler {
 
 	/**
+	 * 权限码异常
+	 */
+	@ExceptionHandler(NotPermissionException.class)
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+	public R handleNotPermissionException(NotPermissionException e, HttpServletRequest request) {
+		String requestURI = request.getRequestURI();
+		log.error("请求地址'{}',权限码校验失败'{}'", requestURI, e.getMessage());
+		return R.failed("没有访问权限，请联系管理员授权");
+	}
+
+	/**
+	 * 角色权限异常
+	 */
+	@ExceptionHandler(NotRoleException.class)
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+	public R<Void> handleNotRoleException(NotRoleException e, HttpServletRequest request) {
+		String requestURI = request.getRequestURI();
+		log.error("请求地址'{}',角色权限校验失败'{}'", requestURI, e.getMessage());
+		return R.failed("没有访问权限，请联系管理员授权");
+	}
+
+	/**
+	 * 认证失败
+	 */
+	@ExceptionHandler(NotLoginException.class)
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+	public R<Void> handleNotLoginException(NotLoginException e, HttpServletRequest request) {
+		String requestURI = request.getRequestURI();
+		log.error("请求地址'{}',认证失败'{}',无法访问系统资源", requestURI, e.getMessage());
+		return R.failed("认证失败，无法访问系统资源");
+	}
+
+	/**
+	 * 无效认证
+	 */
+	@ExceptionHandler(IdTokenInvalidException.class)
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+	public R<Void> handleIdTokenInvalidException(IdTokenInvalidException e, HttpServletRequest request) {
+		String requestURI = request.getRequestURI();
+		log.error("请求地址'{}',内网认证失败'{}',无法访问系统资源", requestURI, e.getMessage());
+		return R.failed("认证失败，无法访问系统资源");
+	}
+
+	/**
 	 * 全局异常.
 	 * @param e the e
 	 * @return R
@@ -58,6 +108,8 @@ public class GlobalBizExceptionHandler {
 		Tracer.trace(e);
 		return R.failed(e.getLocalizedMessage());
 	}
+
+
 
 	/**
 	 * 处理业务校验过程中碰到的非法参数异常 该异常基本由{@link org.springframework.util.Assert}抛出
@@ -101,5 +153,6 @@ public class GlobalBizExceptionHandler {
 		log.warn("参数绑定异常,ex = {}", fieldErrors.get(0).getDefaultMessage());
 		return R.failed(fieldErrors.get(0).getDefaultMessage());
 	}
+
 
 }

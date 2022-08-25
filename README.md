@@ -1,7 +1,6 @@
 ## 系统说明
 
 - 基于 Pig开源版 开发，移除oauth2改为SaToken，删除oauth2相关代码
-- 集成积木报表
 
 [配套文档](https://www.yuque.com/wchenyang/ah2b1g/fntnc1) 
 
@@ -39,6 +38,7 @@ cloud-satoken
      ├── common-satoken -- satoken扩展封装
      ├── common-security -- 安全工具类
      └── common-feign -- feign 扩展封装
+     └── common-sms -- 第三方短信扩展封装
 ├── gateway -- Spring Cloud Gateway网关[9999]
 └── upms -- 通用用户权限管理模块
      └── upms-api -- 通用用户权限管理系统公共api模块
@@ -46,13 +46,14 @@ cloud-satoken
 └── visual
      └── monitor -- 服务监控 [5001]
      ├── codegen -- 图形化代码生成 [5002]
+     ├── jimu -- 积木报表 [7001]
      ├── sentinel-dashboard -- 流量高可用 [5003]
      └── xxl-job-admin -- 分布式定时任务管理台 [5004]
 ```
 
 ### 本地开发 运行
 1.启动本地nacos 新建命名空间Id: 802d2e82-082a-4fc6-ae84-d318e7796058<br/>
-2.导入db/yifan-nacos_config.zip文件到新建的命名空间下<br/>
+2.导入db/nacos_config.zip文件到新建的命名空间下<br/>
 3.导入数据库文件 db/cloud.sql，需要提前创建好数据库<br/>
 4.启动gateway,upms,auth测试
 

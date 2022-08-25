@@ -20,22 +20,25 @@ package com.wangchenyang.admin.service.impl;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.RandomUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.google.common.collect.Maps;
 import com.wangchenyang.admin.api.entity.SysUser;
 import com.wangchenyang.admin.mapper.SysUserMapper;
 import com.wangchenyang.admin.service.AppService;
+import com.wangchenyang.admin.service.SmsSendService;
 import com.wangchenyang.common.core.constant.CacheConstants;
 import com.wangchenyang.common.core.constant.SecurityConstants;
 import com.wangchenyang.common.core.exception.ErrorCodes;
 import com.wangchenyang.common.core.util.MsgUtils;
 import com.wangchenyang.common.core.util.R;
 import com.wangchenyang.common.redis.utils.RedisUtils;
-import io.springboot.sms.core.SmsClient;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author lengleng
@@ -50,10 +53,13 @@ public class AppServiceImpl implements AppService {
 
 	private final SysUserMapper userMapper;
 
-	private final SmsClient smsClient;
+	private final SmsSendService smsSendService;
+
+	//验证码模板Code
+	private final static String SEND_TEMPLATE_CODE="";
 
 	/**
-	 * 发送手机验证码 TODO: 调用短信网关发送验证码,测试返回前端
+	 * 发送手机验证码
 	 * @param phone 手机号
 	 * @return code
 	 */
@@ -76,10 +82,11 @@ public class AppServiceImpl implements AppService {
 		log.info("手机号生成验证码成功:{},{}", phone, code);
 		RedisUtils.setCacheObject(CacheConstants.DEFAULT_CODE_KEY + phone, code,
 				Duration.ofSeconds(SecurityConstants.CODE_TIME));
-
 		// 调用短信通道发送
-		this.smsClient.sendCode(code, phone);
-		return R.ok(Boolean.TRUE, code);
+		Map<String,Object> paramsMap=new HashMap<>(1);
+		paramsMap.put("code",code);
+		smsSendService.sendSingleSmsToAdmin(phone,null,SEND_TEMPLATE_CODE,paramsMap);
+		return R.ok(Boolean.TRUE);
 	}
 
 }

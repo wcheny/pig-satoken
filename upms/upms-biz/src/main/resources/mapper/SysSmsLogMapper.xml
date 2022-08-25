@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wangchenyang.admin.mapper.SysSmsLogMapper">
+
+  <resultMap id="sysSmsLogMap" type="com.wangchenyang.admin.api.entity.SysSmsLog">
+    <id property="id" column="id"/>
+    <result property="channelId" column="channel_id"/>
+    <result property="channelCode" column="channel_code"/>
+    <result property="templateId" column="template_id"/>
+    <result property="templateCode" column="template_code"/>
+    <result property="templateType" column="template_type"/>
+    <result property="templateContent" column="template_content"/>
+    <result property="templateParams" column="template_params"/>
+    <result property="apiTemplateId" column="api_template_id"/>
+    <result property="mobile" column="mobile"/>
+    <result property="userId" column="user_id"/>
+    <result property="userType" column="user_type"/>
+    <result property="sendStatus" column="send_status"/>
+    <result property="sendTime" column="send_time"/>
+    <result property="sendCode" column="send_code"/>
+    <result property="sendMsg" column="send_msg"/>
+    <result property="apiSendCode" column="api_send_code"/>
+    <result property="apiSendMsg" column="api_send_msg"/>
+    <result property="apiRequestId" column="api_request_id"/>
+    <result property="apiSerialNo" column="api_serial_no"/>
+    <result property="receiveStatus" column="receive_status"/>
+    <result property="receiveTime" column="receive_time"/>
+    <result property="apiReceiveCode" column="api_receive_code"/>
+    <result property="apiReceiveMsg" column="api_receive_msg"/>
+    <result property="createTime" column="create_time"/>
+    <result property="updateTime" column="update_time"/>
+    <result property="createBy" column="create_by"/>
+    <result property="updateBy" column="update_by"/>
+    <result property="delFlag" column="del_flag"/>
+  </resultMap>
+</mapper>
